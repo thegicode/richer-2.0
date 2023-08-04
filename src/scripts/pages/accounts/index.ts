@@ -26,7 +26,7 @@ class Accounts {
             .map((account) => accountItem.render(account))
             .forEach((element) => fragment.appendChild(element));
 
-        document.querySelector("tbody")?.appendChild(fragment);
+        document.querySelector("ul")?.appendChild(fragment);
     }
 }
 

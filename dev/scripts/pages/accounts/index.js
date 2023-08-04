@@ -22,7 +22,7 @@ class Accounts {
         myAccounts
             .map((account) => accountItem.render(account))
             .forEach((element) => fragment.appendChild(element));
-        (_a = document.querySelector("tbody")) === null || _a === void 0 ? void 0 : _a.appendChild(fragment);
+        (_a = document.querySelector("ul")) === null || _a === void 0 ? void 0 : _a.appendChild(fragment);
     }
 }
 new Accounts();
