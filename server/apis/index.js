@@ -1,55 +1,12 @@
-{
-    const accountsModule = require("./accounts");
-    // const marketsModule = require("./markets");
-    // const candlesMinutesModule = require("./candlesMinutes");
-    // const candlesDaysModule = require("./candlesDays");
-    // const tickersModule = require("./tickers");
+const accounts = require("./accounts");
 
-    // const markets = () => {
-    //     try {
-    //         return marketsModule();
-    //     } catch (err) {
-    //         console.error(err);
-    //     }
-    // };
-
-    // const candlesMinutes = (query) => {
-    //     try {
-    //         return candlesMinutesModule(query);
-    //     } catch (err) {
-    //         console.error(err);
-    //     }
-    // };
-
-    // const candlesDays = (query) => {
-    //     try {
-    //         return candlesDaysModule(query);
-    //     } catch (err) {
-    //         console.error(err);
-    //     }
-    // };
-
-    const accounts = async () => {
+module.exports = async (app) => {
+    app.get("/getAccounts", async (req, res) => {
         try {
-            return await accountsModule();
-        } catch (err) {
-            console.error(err);
+            const data = await accounts();
+            res.send(data);
+        } catch (error) {
+            console.warn(error.message);
         }
-    };
-
-    // const tickers = () => {
-    //     try {
-    //         return tickersModule();
-    //     } catch (err) {
-    //         console.error(err);
-    //     }
-    // };
-
-    module.exports = {
-        // markets,
-        // candlesMinutes,
-        // candlesDays,
-        accounts,
-        // tickers,
-    };
-}
+    });
+};

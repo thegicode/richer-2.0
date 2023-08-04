@@ -8,18 +8,10 @@ console.log(isProduction, port);
 
 app.use(express.static(staticPath));
 
+apis(app);
+
 staicRoutes(app, staticPath);
 
 app.listen(port, () => {
     console.log(`Start: http://localhost:${port}`);
-});
-
-// getAccounts
-app.get("/getAccounts", async (req, res) => {
-    try {
-        const data = await apis.accounts();
-        res.send(data);
-    } catch (error) {
-        console.warn(error.message);
-    }
 });
