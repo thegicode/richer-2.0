@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Accounts</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="robots" content="noindex, nofollow" />
+        <link
+            rel="shortcut icon"
+            href="/assets/images/favicon.ico"
+            type="image/x-icon"
+        />
+        <link
+            rel="icon"
+            href="/assets/images/favicon.ico"
+            type="image/x-icon"
+        />
+        <link rel="stylesheet" href="/css/accounts.css" />
+        <script type="module" src="/js/accounts/index.js" async></script>
+    </head>
+    <body>
+        <div class="root">
+            <h1 class="accounts">Accounts</h1>
+            <table>
+                <thead>
+                    <tr>
+                        <th>보유자산</th>
+                        <th>보유수량</th>
+                        <th>매수평균가</th>
+                        <th>매수금액</th>
+                        <th>평가금액</th>
+                        <th>평가손익</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+
+            <template id="accountsItem">
+                <tr>
+                    <!-- 보유자산 -->
+                    <th></th>
+                    <!-- 보유수량  -->
+                    <td class="volume"></td>
+                    <!-- 매수평균가 -->
+                    <td class="avgBuyPrice"></td>
+                    <!-- 매수금액  -->
+                    <td class="buyPrice"></td>
+                    <!-- 평가금액  -->
+                    <td class="appraisalPrice"></td>
+                    <!-- 평가손익(%)  -->
+                    <td class="gainsLosses"></td>
+                    <!-- 버튼  -->
+                    <td class="actions">
+                        <button type="button">주문</button>
+                    </td>
+                </tr>
+            </template>
+        </div>
+    </body>
+</html>
