@@ -24,12 +24,18 @@ export default class AccountItem {
         const element = template?.cloneNode(true) as HTMLElement;
         element.querySelector("h3")!.textContent = currency;
         element.querySelector(".volume")!.textContent = volume.toLocaleString();
+
         element.querySelector(
-            ".avgBuyPrice"
-        )!.textContent = `${avg_buy_price.toLocaleString()} ${unit_currency}`;
-        element.querySelector(
-            ".buyPrice"
-        )!.textContent = `${buy_price.toLocaleString()}  ${unit_currency}`;
+            ".avgBuyPrice .value"
+        )!.textContent = `${Math.round(avg_buy_price).toLocaleString()}`;
+
+        element.querySelector(".buyPrice .value")!.textContent = `${Math.round(
+            buy_price
+        ).toLocaleString()}`;
+
+        element.querySelectorAll(".unit").forEach((el) => {
+            el.textContent = unit_currency;
+        });
 
         return element;
     }

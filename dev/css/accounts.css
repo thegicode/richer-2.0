@@ -19,15 +19,24 @@ ul {
 }
 
 li {
-  padding: 1rem 0;
-  border-top: 1px solid #ddd;
+  padding: 0 1rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 10px;
 }
 li div {
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  border-top: 1px dashed #ddd;
 }
-li strong {
-  margin-left: 10px;
+li .unit {
+  margin-left: 0.5rem;
+  font-size: 12px;
+  color: #666;
+}
+li .actions {
+  padding: 1rem 0;
 }
 
 /*# sourceMappingURL=accounts.css.map */

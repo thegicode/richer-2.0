@@ -12,8 +12,11 @@
       const element = template === null || template === void 0 ? void 0 : template.cloneNode(true);
       element.querySelector("h3").textContent = currency;
       element.querySelector(".volume").textContent = volume.toLocaleString();
-      element.querySelector(".avgBuyPrice").textContent = `${avg_buy_price.toLocaleString()} ${unit_currency}`;
-      element.querySelector(".buyPrice").textContent = `${buy_price.toLocaleString()}  ${unit_currency}`;
+      element.querySelector(".avgBuyPrice .value").textContent = `${Math.round(avg_buy_price).toLocaleString()}`;
+      element.querySelector(".buyPrice .value").textContent = `${Math.round(buy_price).toLocaleString()}`;
+      element.querySelectorAll(".unit").forEach((el) => {
+        el.textContent = unit_currency;
+      });
       return element;
     }
   };
