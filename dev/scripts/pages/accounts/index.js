@@ -1,15 +1,28 @@
 import AccountItem from "./AccountItem";
 class Accounts {
     constructor() {
-        this.getFetch();
+        this.getAccounts();
+        this.getTickers();
     }
-    getFetch() {
+    getAccounts() {
         fetch(`/getAccounts`, {
             method: "GET",
         })
             .then((data) => data.json())
             .then((response) => {
             this.renderList(response);
+        })
+            .catch((error) => {
+            console.warn(error instanceof Error ? error.message : error);
+        });
+    }
+    getTickers() {
+        fetch(`/getTickers`, {
+            method: "GET",
+        })
+            .then((data) => data.json())
+            .then((response) => {
+            console.log("getTickers", response);
         })
             .catch((error) => {
             console.warn(error instanceof Error ? error.message : error);
