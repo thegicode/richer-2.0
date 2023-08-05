@@ -8,15 +8,11 @@ module.exports = async () => {
     const PATHS = require("./paths");
 
     const headers = { Authorization: TOKEN };
-    let data = await http.get(URL.accounts, headers);
+    const data = await http.get(URL.accounts, headers);
     const myMarkets = [];
 
-    data = data
-        .filter((account) => {
-            if (account.currency === "KRW" || account.avg_buy_price > 0) {
-                return true;
-            }
-        })
+    const accountsData = data
+        .filter((account) => account.avg_buy_price > 0)
         .map((account) => {
             const {
                 currency,
@@ -29,40 +25,36 @@ module.exports = async () => {
             const locked_number = Number(locked);
             const volume = Number(balance) + locked_number;
 
-            if (account.currency !== "KRW") {
-                myMarkets.push(`${account.unit_currency}-${account.currency}`);
-            }
+            myMarkets.push(`${unit_currency}-${currency}`);
 
             return {
-                balance: Number(balance),
-                currency,
-                locked: locked_number,
                 avg_buy_price: Number(avg_buy_price),
                 avg_buy_price_modified,
+                balance: Number(balance),
+                buy_price: volume * Number(avg_buy_price),
+                currency,
+                locked: locked_number,
                 unit_currency,
                 volume,
-                buy_price: volume * Number(avg_buy_price),
             };
-        })
-        .sort((a, b) => {
-            const aPrice = a.buy_price;
-            const bPrice = b.buy_price;
-            if (aPrice > bPrice) {
-                return -1;
-            }
-            if (aPrice < bPrice) {
-                return 1;
-            }
-            return 0;
         });
+    // .sort((a, b) => {
+    //     const aPrice = a.buy_price;
+    //     const bPrice = b.buy_price;
+    //     if (aPrice > bPrice) {
+    //         return -1;
+    //     }
+    //     if (aPrice < bPrice) {
+    //         return 1;
+    //     }
+    //     return 0;
+    // });
 
     // Tickers api를 가져오기 위한 마켓이름 배열 파일을 만든다.
     const dataURL = path.resolve(PATHS.myMarkets);
     fs.writeFileSync(dataURL, JSON.stringify(myMarkets));
 
-    // console.log("accounts: ", myMarkets);
-
-    return data;
+    return accountsData;
 };
 
 // const request = require("request");

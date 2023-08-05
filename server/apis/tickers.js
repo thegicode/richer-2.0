@@ -32,7 +32,5 @@ module.exports = async () => {
         };
     });
 
-    // console.log("Tickers: ", data);
-
     return data;
 };

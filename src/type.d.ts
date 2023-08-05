@@ -1,11 +1,3 @@
-// interface Ticker {
-//     market: string
-//     trade_date_kst: string
-//     trade_time_kst: string
-//     trade_price: string
-//     timestamp: string
-// }
-
 interface Account {
     balance: number;
     currency: string;
@@ -15,6 +7,18 @@ interface Account {
     unit_currency: string;
     volume: number;
     buy_price: number;
+}
+
+interface Ticker {
+    market: string;
+    trade_date_kst: string;
+    trade_time_kst: string;
+    trade_price: number;
+    timestamp: number;
+}
+
+interface AccountExtend extends Account {
+    trade_price: number;
 }
 
 // interface Asset {

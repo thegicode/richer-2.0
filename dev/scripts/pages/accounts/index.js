@@ -2,7 +2,6 @@ import AccountItem from "./AccountItem";
 class Accounts {
     constructor() {
         this.getAccounts();
-        this.getTickers();
     }
     getAccounts() {
         fetch(`/getAccounts`, {
@@ -10,25 +9,32 @@ class Accounts {
         })
             .then((data) => data.json())
             .then((response) => {
-            this.renderList(response);
+            this.getTickers(response);
         })
             .catch((error) => {
             console.warn(error instanceof Error ? error.message : error);
         });
     }
-    getTickers() {
+    getTickers(myAccounts) {
         fetch(`/getTickers`, {
             method: "GET",
         })
             .then((data) => data.json())
             .then((response) => {
-            console.log("getTickers", response);
+            this.renderTickers(myAccounts, response);
         })
             .catch((error) => {
             console.warn(error instanceof Error ? error.message : error);
         });
     }
-    renderList(myAccounts) {
+    renderTickers(myAccounts, tickers) {
+        const data = myAccounts.map((account, index) => {
+            const { trade_price } = tickers[index];
+            return Object.assign(Object.assign({}, account), { trade_price });
+        });
+        this.renderAccounts(data);
+    }
+    renderAccounts(myAccounts) {
         var _a;
         const accountItem = new AccountItem();
         const fragment = new DocumentFragment();
