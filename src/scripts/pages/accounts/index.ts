@@ -25,7 +25,6 @@ class Accounts {
         })
             .then((data) => data.json())
             .then((response) => {
-                // this.renderList(response);
                 console.log("getTickers", response);
             })
             .catch((error) => {

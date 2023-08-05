@@ -1,15 +1,14 @@
 module.exports = async () => {
-    // const fs = require("fs");
-    // const path = require("path");
+    const fs = require("fs");
+    const path = require("path");
 
     const http = require("./http");
     const URL = require("../env/url");
+    const PATHS = require("./paths");
 
-    const myMarkets = ["KRW-BTC", "KRW-ETH"];
-
-    // const myMarketsUrl = path.resolve(`./src/data/myMarkets.json`);
-    // const myMarketsRes = fs.readFileSync(myMarketsUrl, "utf8");
-    // const myMarkets = JSON.parse(myMarketsRes);
+    const myMarketsUrl = path.resolve(PATHS.myMarkets);
+    const myMarketsRes = fs.readFileSync(myMarketsUrl, "utf8");
+    const myMarkets = JSON.parse(myMarketsRes);
     const marketsStr = myMarkets.join("%2C%20");
     const url = `${URL.ticker}?markets=${marketsStr}`;
 
@@ -33,7 +32,7 @@ module.exports = async () => {
         };
     });
 
-    console.log("Tickers: ", data);
+    // console.log("Tickers: ", data);
 
     return data;
 };

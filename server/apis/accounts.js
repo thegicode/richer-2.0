@@ -1,29 +1,16 @@
-// const request = require("request");
-// const { accounts: ACCOUNTS_URL } = require(`../env/url`);
-// const token = require("../env/token");
-
-// const options = {
-//     method: "GET",
-//     url: ACCOUNTS_URL,
-//     headers: { Authorization: token },
-// };
-
-// request(options, (error, response, body) => {
-//     if (error) throw new Error(error);
-//     console.log(JSON.parse(body));
-// });
-
 module.exports = async () => {
-    // const fs = require("fs");
-    // const path = require("path");
+    const fs = require("fs");
+    const path = require("path");
 
     const URL = require("../env/url");
     const TOKEN = require("../env//token");
     const http = require("./http");
+    const PATHS = require("./paths");
 
     const headers = { Authorization: TOKEN };
     let data = await http.get(URL.accounts, headers);
     const myMarkets = [];
+
     data = data
         .filter((account) => {
             if (account.currency === "KRW" || account.avg_buy_price > 0) {
@@ -70,10 +57,25 @@ module.exports = async () => {
         });
 
     // Tickers api를 가져오기 위한 마켓이름 배열 파일을 만든다.
-    // const dataURL = path.resolve(`./src/data/myMarkets.json`);
-    // fs.writeFileSync(dataURL, JSON.stringify(myMarkets));
+    const dataURL = path.resolve(PATHS.myMarkets);
+    fs.writeFileSync(dataURL, JSON.stringify(myMarkets));
 
-    // console.log('accounts: ', data)
+    // console.log("accounts: ", myMarkets);
 
     return data;
 };
+
+// const request = require("request");
+// const { accounts: ACCOUNTS_URL } = require(`../env/url`);
+// const token = require("../env/token");
+
+// const options = {
+//     method: "GET",
+//     url: ACCOUNTS_URL,
+//     headers: { Authorization: token },
+// };
+
+// request(options, (error, response, body) => {
+//     if (error) throw new Error(error);
+//     console.log(JSON.parse(body));
+// });
