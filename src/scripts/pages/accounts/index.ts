@@ -1,60 +1,55 @@
 import AccountItem from "./AccountItem";
 
-class Accounts {
+class AccountManager {
     constructor() {
-        this.getAccounts();
+        this.initializeAccounts();
     }
 
-    private getAccounts() {
-        fetch(`/getAccounts`, {
-            method: "GET",
-        })
-            .then((data) => data.json())
-            .then((response) => {
-                this.getTickers(response);
-            })
-            .catch((error) => {
-                console.warn(error instanceof Error ? error.message : error);
-            });
+    private async fetchData(url: string) {
+        try {
+            const response = await fetch(url, { method: "GET" });
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            console.warn(error instanceof Error ? error.message : error);
+        }
     }
 
-    private getTickers(myAccounts: Account[]) {
-        fetch(`/getTickers`, {
-            method: "GET",
-        })
-            .then((data) => data.json())
-            .then((response) => {
-                this.renderTickers(myAccounts, response);
-            })
-            .catch((error) => {
-                console.warn(error instanceof Error ? error.message : error);
-            });
+    private async initializeAccounts() {
+        const accounts = await this.fetchData("/getAccounts");
+        this.updateAccountsWithTickers(accounts);
     }
 
-    private renderTickers(myAccounts: Account[], tickers: Ticker[]) {
+    private async updateAccountsWithTickers(myAccounts: Account[]) {
+        const tickers = await this.fetchData("/getTickers");
+        this.combineAccountsWithTickers(myAccounts, tickers);
+    }
+
+    private combineAccountsWithTickers(
+        myAccounts: Account[],
+        ticekrs: Ticker[]
+    ) {
         const data = myAccounts.map((account, index) => {
-            const { trade_price } = tickers[index];
-
-            // if (market.includes(account.currency) === false) return;
+            const { trade_price } = ticekrs[index];
             return {
                 ...account,
                 trade_price,
             };
         });
 
-        this.renderAccounts(data);
+        this.displayAccounts(data);
     }
 
-    private renderAccounts(myAccounts: AccountExtend[]) {
+    private displayAccounts(myAccounts: AccountExtend[]) {
         const accountItem = new AccountItem();
         const fragment = new DocumentFragment();
 
         myAccounts
             .map((account) => accountItem.render(account))
-            .forEach((element) => fragment.appendChild(element));
+            .forEach((element) => fragment.appendChild(element!));
 
         document.querySelector("ul")?.appendChild(fragment);
     }
 }
 
-new Accounts();
+new AccountManager();

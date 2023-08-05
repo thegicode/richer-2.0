@@ -5,7 +5,16 @@ export default class AccountItem {
         this.template = document.querySelector("#accountsItem");
     }
 
-    render(data: AccountExtend) {
+    private toLocalStringRounded(value: number): string {
+        return Math.round(value).toLocaleString();
+    }
+
+    render(data: AccountExtend): HTMLElement | null {
+        if (!this.template) {
+            console.error("Template is not found.");
+            return null;
+        }
+
         const {
             avg_buy_price,
             // avg_buy_price_modified,
@@ -18,37 +27,27 @@ export default class AccountItem {
             trade_price,
         } = data;
 
-        const averageBuyPrice = Math.round(avg_buy_price);
-        const currentPrice = Math.round(trade_price);
-        const difference = currentPrice - averageBuyPrice;
-        const gainsLosses = Math.round(difference * volume);
-        const appraisalPrice = Math.round(buy_price) + gainsLosses;
-        const returnRate = (difference / averageBuyPrice) * 100;
+        const difference = trade_price - avg_buy_price;
+        const gainsLosses = difference * volume;
+        const appraisalPrice = buy_price + gainsLosses;
+        const returnRate = (difference / avg_buy_price) * 100;
 
-        const template = this.template?.content.firstElementChild;
+        const values = {
+            h3: currency,
+            ".volume": volume.toString(),
+            ".avgBuyPrice .value": this.toLocalStringRounded(avg_buy_price),
+            ".buyPrice .value": this.toLocalStringRounded(buy_price),
+            ".gainsLosses .value": this.toLocalStringRounded(gainsLosses),
+            ".returnRate .value": returnRate.toFixed(2),
+            ".appraisalPrice .value": this.toLocalStringRounded(appraisalPrice),
+        };
+
+        const template = this.template.content.firstElementChild;
         const element = template?.cloneNode(true) as HTMLElement;
-        element.querySelector("h3")!.textContent = currency;
-        element.querySelector(".volume")!.textContent = volume.toString();
 
-        element.querySelector(
-            ".avgBuyPrice .value"
-        )!.textContent = `${averageBuyPrice.toLocaleString()}`;
-
-        element.querySelector(".buyPrice .value")!.textContent = `${Math.round(
-            buy_price
-        ).toLocaleString()}`;
-
-        element.querySelector(
-            ".gainsLosses .value"
-        )!.textContent = `${gainsLosses.toLocaleString()}`;
-
-        element.querySelector(
-            ".returnRate .value"
-        )!.textContent = `${returnRate.toFixed(2)}`;
-
-        element.querySelector(
-            ".appraisalPrice .value"
-        )!.textContent = `${appraisalPrice.toLocaleString()}`;
+        for (const [selector, value] of Object.entries(values)) {
+            element.querySelector(selector)!.textContent = value;
+        }
 
         element.querySelectorAll(".unit").forEach((el) => {
             el.textContent = unit_currency;
