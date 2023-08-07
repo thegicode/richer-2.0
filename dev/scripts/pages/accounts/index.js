@@ -37,6 +37,8 @@ class AccountManager {
         });
     }
     combineAccountsWithTickers(myAccounts, ticekrs) {
+        if (myAccounts.length === undefined)
+            return;
         const data = myAccounts.map((account, index) => {
             const { trade_price } = ticekrs[index];
             return Object.assign(Object.assign({}, account), { trade_price });

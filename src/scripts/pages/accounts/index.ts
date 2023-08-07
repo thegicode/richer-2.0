@@ -29,6 +29,8 @@ class AccountManager {
         myAccounts: Account[],
         ticekrs: Ticker[]
     ) {
+        if (myAccounts.length === undefined) return;
+
         const data = myAccounts.map((account, index) => {
             const { trade_price } = ticekrs[index];
             return {
