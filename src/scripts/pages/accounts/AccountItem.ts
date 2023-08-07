@@ -70,18 +70,26 @@ export default class AccountItem {
         const amount = Number(balance) + Number(locked); // 보유 KRW
         const totalAmount = this.totalBuyAmount + amount; // 총 보유자산
         const totalAppraisalPrice = this.totalBuyAmount + this.totalGainsLosses; // 총 평가금액
+
+        const values = {
+            ".amount .value": Math.round(amount).toLocaleString(),
+            ".totalAmount .value": Math.round(totalAmount).toLocaleString(),
+            ".totalBuyAmount .value": Math.round(
+                this.totalBuyAmount
+            ).toLocaleString(),
+            ".totalGainsLosses .value": Math.round(
+                this.totalGainsLosses
+            ).toLocaleString(),
+            ".totalAppraisalPrice .value":
+                Math.round(totalAppraisalPrice).toLocaleString(),
+        };
+
+        for (const [selector, value] of Object.entries(values)) {
+            document.querySelector(selector)!.textContent = value;
+        }
+
         // const totalReturnRate = this.totalReturnRates / this.size; // 총 평가수익률
 
-        document.querySelector(".amount .value")!.textContent =
-            Math.round(amount).toLocaleString();
-        document.querySelector(".totalAmount .value")!.textContent =
-            Math.round(totalAmount).toLocaleString();
-        document.querySelector(".totalBuyAmount .value")!.textContent =
-            Math.round(this.totalBuyAmount).toLocaleString();
-        document.querySelector(".totalGainsLosses .value")!.textContent =
-            Math.round(this.totalGainsLosses).toLocaleString();
-        document.querySelector(".totalAppraisalPrice .value")!.textContent =
-            Math.round(totalAppraisalPrice).toLocaleString();
         // document.querySelector(".totalReturnRate .value")!.textContent =
         // totalReturnRate.toFixed(2);
     }

@@ -4,13 +4,14 @@ body {
   margin: 0;
 }
 
-body {
+h1 {
   margin: 1rem;
+  font-size: 1.5rem;
 }
 
-h1 {
-  margin: 0 0 10px;
-  font-size: 1.5rem;
+h2 {
+  margin: 10px 0;
+  font-size: 1.3rem;
 }
 
 ul {
@@ -20,7 +21,7 @@ ul {
 
 .tradeState {
   margin-bottom: 2rem;
-  padding: 0 1rem;
+  padding: 1rem;
   border-top: 1px solid #ddd;
   border-bottom: 1px solid #ddd;
 }
@@ -28,19 +29,27 @@ ul {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding: 8px 0;
+}
+.tradeState p {
+  margin: 0;
 }
 
+.accountsList {
+  margin: 0 1rem;
+}
 .accountsList li {
   padding: 0 1rem;
   margin-bottom: 1rem;
-  border: 1px solid #ddd;
+  border: 1px solid #dae9f6;
   border-radius: 10px;
+  background: aliceblue;
 }
 .accountsList li div {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-top: 1px dashed #ddd;
+  border-top: 1px dashed #dae9f6;
 }
 .accountsList li .actions {
   padding: 1rem 0;
