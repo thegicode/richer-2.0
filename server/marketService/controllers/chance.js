@@ -1,5 +1,4 @@
 const { authorizationTokenBody } = require("../../env/token");
-
 const UPBIT_URL = require("../../env/url");
 const { getJSON } = require("../utils/apiRequest");
 
@@ -19,11 +18,6 @@ module.exports = async () => {
 
     return await getJSON(options);
 };
-
-// request(options, (error, response, body) => {
-//     if (error) throw new Error(error);
-//     console.log(body);
-// });
 
 /*
 {

@@ -1,7 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 
-const URL = require("../../env/url");
+const UPBIT_URL = require("../../env/url");
 const { authorizationToken } = require("../../env/token");
 
 const { getJSON } = require("../utils/apiRequest");
@@ -9,7 +9,7 @@ const PATHS = require("../utils/paths");
 
 module.exports = async () => {
     const options = {
-        url: URL.accounts,
+        url: UPBIT_URL.accounts,
         headers: { Authorization: authorizationToken },
     };
 

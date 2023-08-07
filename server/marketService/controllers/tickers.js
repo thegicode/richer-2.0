@@ -1,7 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 const { getJSON } = require("../utils/apiRequest");
-const URL = require("../../env/url");
+const UPBIT_URL = require("../../env/url");
 const PATHS = require("../utils/paths");
 
 module.exports = async () => {
@@ -10,7 +10,7 @@ module.exports = async () => {
     const myMarkets = JSON.parse(myMarketsRes);
     const marketsStr = encodeURIComponent(myMarkets.join(", "));
 
-    const url = `${URL.ticker}?markets=${marketsStr}`;
+    const url = `${UPBIT_URL.ticker}?markets=${marketsStr}`;
     const response = await getJSON({ url });
 
     return response.map(
