@@ -14,7 +14,7 @@ const performRequest = async ({ method = "GET", url, headers = {}, body }) => {
     }
 };
 
-const getJSON = (url, headers) => performRequest({ url, headers });
+const getJSON = (options) => performRequest(options);
 
 module.exports = {
     getJSON,

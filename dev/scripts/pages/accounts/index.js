@@ -33,6 +33,8 @@ class AccountManager {
     updateAccountsWithTickers(myAccounts, krwAsset) {
         return __awaiter(this, void 0, void 0, function* () {
             const tickers = yield this.fetchData("/getTickers");
+            const chance = yield this.fetchData("/getChance");
+            console.log(chance);
             this.combineAccountsWithTickers(myAccounts, tickers, krwAsset);
         });
     }

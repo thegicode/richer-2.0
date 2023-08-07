@@ -43,7 +43,7 @@ export default class AccountItem {
 
         const values = {
             h3: currency,
-            ".volume": volume.toString(),
+            ".volume .value": volume.toString(),
             ".avgBuyPrice .value": this.toLocalStringRounded(avg_buy_price),
             ".buyPrice .value": this.toLocalStringRounded(buy_price),
             ".gainsLosses .value": this.toLocalStringRounded(gainsLosses),

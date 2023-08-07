@@ -25,6 +25,10 @@ class AccountManager {
         krwAsset: Asset
     ) {
         const tickers = await this.fetchData("/getTickers");
+        const chance = await this.fetchData("/getChance");
+
+        console.log(chance);
+
         this.combineAccountsWithTickers(myAccounts, tickers, krwAsset);
     }
 

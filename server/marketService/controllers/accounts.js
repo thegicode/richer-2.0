@@ -1,14 +1,19 @@
 const fs = require("fs");
 const path = require("path");
 
+const URL = require("../../env/url");
+const { authorizationToken } = require("../../env/token");
+
 const { getJSON } = require("../utils/apiRequest");
 const PATHS = require("../utils/paths");
-const URL = require("../../env/url");
-const TOKEN = require("../../env/token");
 
 module.exports = async () => {
-    const headers = { Authorization: TOKEN };
-    const data = await getJSON(URL.accounts, headers);
+    const options = {
+        url: URL.accounts,
+        headers: { Authorization: authorizationToken },
+    };
+
+    const data = await getJSON(options);
 
     const krwAsset = data.filter((account) => account.currency === "KRW")[0];
 

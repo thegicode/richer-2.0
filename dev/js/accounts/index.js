@@ -36,7 +36,7 @@
           this.totalGainsLosses += gainsLosses;
           const values = {
             h3: currency,
-            ".volume": volume.toString(),
+            ".volume .value": volume.toString(),
             ".avgBuyPrice .value": this.toLocalStringRounded(avg_buy_price),
             ".buyPrice .value": this.toLocalStringRounded(buy_price),
             ".gainsLosses .value": this.toLocalStringRounded(gainsLosses),
@@ -128,6 +128,8 @@
         updateAccountsWithTickers(myAccounts, krwAsset) {
           return __awaiter(this, void 0, void 0, function* () {
             const tickers = yield this.fetchData("/getTickers");
+            const chance = yield this.fetchData("/getChance");
+            console.log(chance);
             this.combineAccountsWithTickers(myAccounts, tickers, krwAsset);
           });
         }

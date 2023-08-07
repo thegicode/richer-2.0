@@ -1,25 +1,39 @@
-const jwt = require("jsonwebtoken");
+const crypto2 = require("crypto");
+const { sign } = require("jsonwebtoken");
 const uuidv4 = require("uuid").v4;
-const key = require("./key");
+const queryEncode = require("querystring").encode;
+
+const KEY = require("./key");
 
 const payload = {
-    access_key: key.access,
+    access_key: KEY.ACCESS,
     nonce: uuidv4(),
 };
-
-const jwtToken = jwt.sign(payload, key.secret);
+const jwtToken = sign(payload, KEY.SECRET);
 const authorizationToken = `Bearer ${jwtToken}`;
 
-module.exports = authorizationToken;
+const authorizationTokenBody = (body) => {
+    const query = queryEncode(body);
+    const hash = crypto2.createHash("sha512");
+    const queryHash = hash.update(query, "utf-8").digest("hex");
 
-// "use strict";
-// const key = require('./key');
-// const sign = require('jsonwebtoken').sign;
-// const uuidv4 = require('uuid').v4;
-// const accessKey = key.access;
-// const secretKey = key.secret;
-// const payload = {
-//     access_key: accessKey,
-//     nonce: uuidv4(),
-// };
-// module.exports = sign(payload, secretKey);
+    const payload = {
+        access_key: KEY.ACCESS,
+        nonce: uuidv4(),
+        query_hash: queryHash,
+        query_hash_alg: "SHA512",
+    };
+
+    const jwtToken = sign(payload, KEY.SECRET);
+    const authorizationToken = `Bearer ${jwtToken}`;
+
+    return {
+        query,
+        token: authorizationToken,
+    };
+};
+
+module.exports = {
+    authorizationToken,
+    authorizationTokenBody,
+};

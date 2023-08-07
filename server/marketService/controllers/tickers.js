@@ -11,7 +11,7 @@ module.exports = async () => {
     const marketsStr = encodeURIComponent(myMarkets.join(", "));
 
     const url = `${URL.ticker}?markets=${marketsStr}`;
-    const response = await getJSON(url);
+    const response = await getJSON({ url });
 
     return response.map(
         ({
