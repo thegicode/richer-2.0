@@ -70,6 +70,8 @@ export default class AccountItem {
         const amount = Number(balance) + Number(locked); // 보유 KRW
         const totalAmount = this.totalBuyAmount + amount; // 총 보유자산
         const totalAppraisalPrice = this.totalBuyAmount + this.totalGainsLosses; // 총 평가금액
+        const totalReturnRate =
+            (this.totalGainsLosses / this.totalBuyAmount) * 100; // 총 평가수익률
 
         const values = {
             ".amount .value": Math.round(amount).toLocaleString(),
@@ -82,13 +84,12 @@ export default class AccountItem {
             ).toLocaleString(),
             ".totalAppraisalPrice .value":
                 Math.round(totalAppraisalPrice).toLocaleString(),
+            ".totalReturnRate .value": totalReturnRate.toFixed(2),
         };
 
         for (const [selector, value] of Object.entries(values)) {
             document.querySelector(selector)!.textContent = value;
         }
-
-        // const totalReturnRate = this.totalReturnRates / this.size; // 총 평가수익률
 
         // document.querySelector(".totalReturnRate .value")!.textContent =
         // totalReturnRate.toFixed(2);

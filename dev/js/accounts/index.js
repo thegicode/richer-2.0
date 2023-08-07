@@ -58,12 +58,14 @@
           const amount = Number(balance) + Number(locked);
           const totalAmount = this.totalBuyAmount + amount;
           const totalAppraisalPrice = this.totalBuyAmount + this.totalGainsLosses;
+          const totalReturnRate = this.totalGainsLosses / this.totalBuyAmount * 100;
           const values = {
             ".amount .value": Math.round(amount).toLocaleString(),
             ".totalAmount .value": Math.round(totalAmount).toLocaleString(),
             ".totalBuyAmount .value": Math.round(this.totalBuyAmount).toLocaleString(),
             ".totalGainsLosses .value": Math.round(this.totalGainsLosses).toLocaleString(),
-            ".totalAppraisalPrice .value": Math.round(totalAppraisalPrice).toLocaleString()
+            ".totalAppraisalPrice .value": Math.round(totalAppraisalPrice).toLocaleString(),
+            ".totalReturnRate .value": totalReturnRate.toFixed(2)
           };
           for (const [selector, value] of Object.entries(values)) {
             document.querySelector(selector).textContent = value;
