@@ -39,8 +39,8 @@ class AccountManager {
         });
     }
     combineAccountsWithTickers(myAccounts, ticekrs, krwAsset) {
-        if (myAccounts.length === undefined)
-            return;
+        if (!myAccounts)
+            this.displayAccountsFail();
         const data = myAccounts.map((account, index) => {
             const { trade_price } = ticekrs[index];
             return Object.assign(Object.assign({}, account), { trade_price });
@@ -56,6 +56,10 @@ class AccountManager {
             .forEach((element) => fragment.appendChild(element));
         (_a = document.querySelector(".accountsList")) === null || _a === void 0 ? void 0 : _a.appendChild(fragment);
         accountItem.tradeAsset(krwAsset);
+    }
+    displayAccountsFail() {
+        document.querySelector(".tradeState").textContent =
+            "자료를 받아오지 못했습니다. ";
     }
 }
 new AccountManager();

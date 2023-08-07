@@ -37,7 +37,7 @@ class AccountManager {
         ticekrs: Ticker[],
         krwAsset: Asset
     ) {
-        if (myAccounts.length === undefined) return;
+        if (!myAccounts) this.displayAccountsFail();
 
         const data = myAccounts.map((account, index) => {
             const { trade_price } = ticekrs[index];
@@ -61,6 +61,11 @@ class AccountManager {
         document.querySelector(".accountsList")?.appendChild(fragment);
 
         accountItem.tradeAsset(krwAsset);
+    }
+
+    private displayAccountsFail() {
+        document.querySelector(".tradeState")!.textContent =
+            "자료를 받아오지 못했습니다. ";
     }
 }
 

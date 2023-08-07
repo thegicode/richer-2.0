@@ -134,8 +134,8 @@
           });
         }
         combineAccountsWithTickers(myAccounts, ticekrs, krwAsset) {
-          if (myAccounts.length === void 0)
-            return;
+          if (!myAccounts)
+            this.displayAccountsFail();
           const data = myAccounts.map((account, index) => {
             const { trade_price } = ticekrs[index];
             return Object.assign(Object.assign({}, account), { trade_price });
@@ -149,6 +149,9 @@
           myAccounts.map((account) => accountItem.render(account)).forEach((element) => fragment.appendChild(element));
           (_a = document.querySelector(".accountsList")) === null || _a === void 0 ? void 0 : _a.appendChild(fragment);
           accountItem.tradeAsset(krwAsset);
+        }
+        displayAccountsFail() {
+          document.querySelector(".tradeState").textContent = "\uC790\uB8CC\uB97C \uBC1B\uC544\uC624\uC9C0 \uBABB\uD588\uC2B5\uB2C8\uB2E4. ";
         }
       };
       new AccountManager();
