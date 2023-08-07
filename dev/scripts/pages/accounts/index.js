@@ -39,13 +39,17 @@ class AccountManager {
         });
     }
     combineAccountsWithTickers(myAccounts, ticekrs, krwAsset) {
-        if (!myAccounts)
+        try {
+            const data = myAccounts.map((account, index) => {
+                const { trade_price } = ticekrs[index];
+                return Object.assign(Object.assign({}, account), { trade_price });
+            });
+            this.displayAccounts(data, krwAsset);
+        }
+        catch (error) {
+            console.error(error instanceof Error ? error.message : error);
             this.displayAccountsFail();
-        const data = myAccounts.map((account, index) => {
-            const { trade_price } = ticekrs[index];
-            return Object.assign(Object.assign({}, account), { trade_price });
-        });
-        this.displayAccounts(data, krwAsset);
+        }
     }
     displayAccounts(myAccounts, krwAsset) {
         var _a;
@@ -59,7 +63,7 @@ class AccountManager {
     }
     displayAccountsFail() {
         document.querySelector(".tradeState").textContent =
-            "자료를 받아오지 못했습니다. ";
+            "자료를 가져오지 못했습니다.";
     }
 }
 new AccountManager();

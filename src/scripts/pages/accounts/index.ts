@@ -37,17 +37,20 @@ class AccountManager {
         ticekrs: Ticker[],
         krwAsset: Asset
     ) {
-        if (!myAccounts) this.displayAccountsFail();
+        try {
+            const data = myAccounts.map((account, index) => {
+                const { trade_price } = ticekrs[index];
+                return {
+                    ...account,
+                    trade_price,
+                };
+            });
 
-        const data = myAccounts.map((account, index) => {
-            const { trade_price } = ticekrs[index];
-            return {
-                ...account,
-                trade_price,
-            };
-        });
-
-        this.displayAccounts(data, krwAsset);
+            this.displayAccounts(data, krwAsset);
+        } catch (error) {
+            console.error(error instanceof Error ? error.message : error);
+            this.displayAccountsFail();
+        }
     }
 
     private displayAccounts(myAccounts: AccountExtend[], krwAsset: Asset) {
@@ -65,7 +68,7 @@ class AccountManager {
 
     private displayAccountsFail() {
         document.querySelector(".tradeState")!.textContent =
-            "자료를 받아오지 못했습니다. ";
+            "자료를 가져오지 못했습니다.";
     }
 }
 

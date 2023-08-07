@@ -134,13 +134,16 @@
           });
         }
         combineAccountsWithTickers(myAccounts, ticekrs, krwAsset) {
-          if (!myAccounts)
+          try {
+            const data = myAccounts.map((account, index) => {
+              const { trade_price } = ticekrs[index];
+              return Object.assign(Object.assign({}, account), { trade_price });
+            });
+            this.displayAccounts(data, krwAsset);
+          } catch (error) {
+            console.error(error instanceof Error ? error.message : error);
             this.displayAccountsFail();
-          const data = myAccounts.map((account, index) => {
-            const { trade_price } = ticekrs[index];
-            return Object.assign(Object.assign({}, account), { trade_price });
-          });
-          this.displayAccounts(data, krwAsset);
+          }
         }
         displayAccounts(myAccounts, krwAsset) {
           var _a;
@@ -151,7 +154,7 @@
           accountItem.tradeAsset(krwAsset);
         }
         displayAccountsFail() {
-          document.querySelector(".tradeState").textContent = "\uC790\uB8CC\uB97C \uBC1B\uC544\uC624\uC9C0 \uBABB\uD588\uC2B5\uB2C8\uB2E4. ";
+          document.querySelector(".tradeState").textContent = "\uC790\uB8CC\uB97C \uAC00\uC838\uC624\uC9C0 \uBABB\uD588\uC2B5\uB2C8\uB2E4.";
         }
       };
       new AccountManager();
