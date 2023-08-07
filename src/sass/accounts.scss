@@ -18,28 +18,47 @@ ul {
     padding: 0;
 }
 
-li {
+.tradeState {
+    margin-bottom: 2rem;
     padding: 0 1rem;
-    margin-bottom: 1rem;
-    border: 1px solid #ddd;
-    border-radius: 10px;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
 
-    div {
+    // border-radius: 10px;
+
+    li {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        border-top: 1px dashed #ddd;
+        // border-top: 1px dashed #ddd;
     }
+}
 
-    .unit,
-    .percent {
-        margin-left: 0.5rem;
-        font-size: 12px;
-        color: #666;
+.accountsList {
+    li {
+        padding: 0 1rem;
+        margin-bottom: 1rem;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+
+        div {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-top: 1px dashed #ddd;
+        }
+
+        .actions {
+            padding: 1rem 0;
+        }
     }
-    .actions {
-        padding: 1rem 0;
-    }
+}
+
+.unit,
+.percent {
+    margin-left: 0.5rem;
+    font-size: 12px;
+    color: #666;
 }
 
 // table {

@@ -9,6 +9,15 @@ interface Account {
     buy_price: number;
 }
 
+interface Asset {
+    avg_buy_price: string;
+    avg_buy_price_modified: true;
+    balance: string;
+    currency: string;
+    locked: string;
+    unit_currency: string;
+}
+
 interface Ticker {
     market: string;
     trade_date_kst: string;

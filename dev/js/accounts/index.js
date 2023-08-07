@@ -15,6 +15,8 @@
       "use strict";
       AccountItem = class {
         constructor() {
+          this.totalBuyAmount = 0;
+          this.totalGainsLosses = 0;
           this.template = document.querySelector("#accountsItem");
         }
         toLocalStringRounded(value) {
@@ -30,6 +32,8 @@
           const gainsLosses = difference * volume;
           const appraisalPrice = buy_price + gainsLosses;
           const returnRate = difference / avg_buy_price * 100;
+          this.totalBuyAmount += buy_price;
+          this.totalGainsLosses += gainsLosses;
           const values = {
             h3: currency,
             ".volume": volume.toString(),
@@ -48,6 +52,17 @@
             el.textContent = unit_currency;
           });
           return element;
+        }
+        tradeAsset(asset) {
+          const { balance, locked } = asset;
+          const amount = Number(balance) + Number(locked);
+          const totalAmount = this.totalBuyAmount + amount;
+          const totalAppraisalPrice = this.totalBuyAmount + this.totalGainsLosses;
+          document.querySelector(".amount .value").textContent = Math.round(amount).toLocaleString();
+          document.querySelector(".totalAmount .value").textContent = Math.round(totalAmount).toLocaleString();
+          document.querySelector(".totalBuyAmount .value").textContent = Math.round(this.totalBuyAmount).toLocaleString();
+          document.querySelector(".totalGainsLosses .value").textContent = Math.round(this.totalGainsLosses).toLocaleString();
+          document.querySelector(".totalAppraisalPrice .value").textContent = Math.round(totalAppraisalPrice).toLocaleString();
         }
       };
     }
@@ -101,31 +116,32 @@
         }
         initializeAccounts() {
           return __awaiter(this, void 0, void 0, function* () {
-            const accounts = yield this.fetchData("/getAccounts");
-            this.updateAccountsWithTickers(accounts);
+            const { krwAsset, myMarkets } = yield this.fetchData("/getAccounts");
+            this.updateAccountsWithTickers(myMarkets, krwAsset);
           });
         }
-        updateAccountsWithTickers(myAccounts) {
+        updateAccountsWithTickers(myAccounts, krwAsset) {
           return __awaiter(this, void 0, void 0, function* () {
             const tickers = yield this.fetchData("/getTickers");
-            this.combineAccountsWithTickers(myAccounts, tickers);
+            this.combineAccountsWithTickers(myAccounts, tickers, krwAsset);
           });
         }
-        combineAccountsWithTickers(myAccounts, ticekrs) {
+        combineAccountsWithTickers(myAccounts, ticekrs, krwAsset) {
           if (myAccounts.length === void 0)
             return;
           const data = myAccounts.map((account, index) => {
             const { trade_price } = ticekrs[index];
             return Object.assign(Object.assign({}, account), { trade_price });
           });
-          this.displayAccounts(data);
+          this.displayAccounts(data, krwAsset);
         }
-        displayAccounts(myAccounts) {
+        displayAccounts(myAccounts, krwAsset) {
           var _a;
           const accountItem = new AccountItem();
           const fragment = new DocumentFragment();
           myAccounts.map((account) => accountItem.render(account)).forEach((element) => fragment.appendChild(element));
-          (_a = document.querySelector("ul")) === null || _a === void 0 ? void 0 : _a.appendChild(fragment);
+          (_a = document.querySelector(".accountsList")) === null || _a === void 0 ? void 0 : _a.appendChild(fragment);
+          accountItem.tradeAsset(krwAsset);
         }
       };
       new AccountManager();

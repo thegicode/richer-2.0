@@ -10,6 +10,8 @@ module.exports = async () => {
     const headers = { Authorization: TOKEN };
     const data = await getJSON(URL.accounts, headers);
 
+    const krwAsset = data.filter((account) => account.currency === "KRW")[0];
+
     const myMarkets = data
         .filter((account) => account.avg_buy_price > 0)
         .map((account) => {
@@ -37,5 +39,8 @@ module.exports = async () => {
     const dataURL = path.resolve(PATHS.myMarkets);
     fs.writeFileSync(dataURL, JSON.stringify(marketsArray));
 
-    return myMarkets;
+    return {
+        krwAsset,
+        myMarkets,
+    };
 };

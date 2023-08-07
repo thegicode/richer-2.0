@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
-        <title>Accounts</title>
+        <title>투자내역</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="robots" content="noindex, nofollow" />
@@ -21,9 +21,55 @@
     </head>
     <body>
         <div class="root">
-            <h1 class="accounts">Accounts</h1>
+            <h1 class="accounts">투자내역</h1>
 
-            <ul></ul>
+            <ul class="tradeState">
+                <h2>보유자산</h2>
+                <li>
+                    <p>보유 KRW</p>
+                    <p class="amount">
+                        <span class="value"></span>
+                        <span class="unit">KRW</span>
+                    </p>
+                </li>
+                <li>
+                    <p>총 보유자산</p>
+                    <p class="totalAmount">
+                        <span class="value"></span>
+                        <span class="unit">KRW</span>
+                    </p>
+                </li>
+                <li>
+                    <p>총 매수금액</p>
+                    <p class="totalBuyAmount">
+                        <span class="value"></span>
+                        <span class="unit">KRW</span>
+                    </p>
+                </li>
+                <li>
+                    <p>총 평가손익</p>
+                    <p class="totalGainsLosses">
+                        <span class="value"></span>
+                        <span class="unit">KRW</span>
+                    </p>
+                </li>
+                <li>
+                    <p>총 평가금액</p>
+                    <p class="totalAppraisalPrice">
+                        <span class="value"></span>
+                        <span class="unit">KRW</span>
+                    </p>
+                </li>
+                <!-- <li>
+                    <p>총 평가수익률</p>
+                    <p class="totalReturnRate">
+                        <span class="value"></span>
+                        <span class="percent">%</span>
+                    </p>
+                </li> -->
+            </ul>
+
+            <ul class="accountsList"></ul>
             <template id="accountsItem">
                 <li>
                     <h3></h3>

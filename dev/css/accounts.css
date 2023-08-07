@@ -18,26 +18,39 @@ ul {
   padding: 0;
 }
 
-li {
+.tradeState {
+  margin-bottom: 2rem;
+  padding: 0 1rem;
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+}
+.tradeState li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.accountsList li {
   padding: 0 1rem;
   margin-bottom: 1rem;
   border: 1px solid #ddd;
   border-radius: 10px;
 }
-li div {
+.accountsList li div {
   display: flex;
   align-items: center;
   justify-content: space-between;
   border-top: 1px dashed #ddd;
 }
-li .unit,
-li .percent {
+.accountsList li .actions {
+  padding: 1rem 0;
+}
+
+.unit,
+.percent {
   margin-left: 0.5rem;
   font-size: 12px;
   color: #666;
-}
-li .actions {
-  padding: 1rem 0;
 }
 
 /*# sourceMappingURL=accounts.css.map */

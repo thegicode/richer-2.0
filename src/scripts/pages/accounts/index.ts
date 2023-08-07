@@ -16,18 +16,22 @@ class AccountManager {
     }
 
     private async initializeAccounts() {
-        const accounts = await this.fetchData("/getAccounts");
-        this.updateAccountsWithTickers(accounts);
+        const { krwAsset, myMarkets } = await this.fetchData("/getAccounts");
+        this.updateAccountsWithTickers(myMarkets, krwAsset);
     }
 
-    private async updateAccountsWithTickers(myAccounts: Account[]) {
+    private async updateAccountsWithTickers(
+        myAccounts: Account[],
+        krwAsset: Asset
+    ) {
         const tickers = await this.fetchData("/getTickers");
-        this.combineAccountsWithTickers(myAccounts, tickers);
+        this.combineAccountsWithTickers(myAccounts, tickers, krwAsset);
     }
 
     private combineAccountsWithTickers(
         myAccounts: Account[],
-        ticekrs: Ticker[]
+        ticekrs: Ticker[],
+        krwAsset: Asset
     ) {
         if (myAccounts.length === undefined) return;
 
@@ -39,10 +43,10 @@ class AccountManager {
             };
         });
 
-        this.displayAccounts(data);
+        this.displayAccounts(data, krwAsset);
     }
 
-    private displayAccounts(myAccounts: AccountExtend[]) {
+    private displayAccounts(myAccounts: AccountExtend[], krwAsset: Asset) {
         const accountItem = new AccountItem();
         const fragment = new DocumentFragment();
 
@@ -50,7 +54,9 @@ class AccountManager {
             .map((account) => accountItem.render(account))
             .forEach((element) => fragment.appendChild(element!));
 
-        document.querySelector("ul")?.appendChild(fragment);
+        document.querySelector(".accountsList")?.appendChild(fragment);
+
+        accountItem.tradeAsset(krwAsset);
     }
 }
 

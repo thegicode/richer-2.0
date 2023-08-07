@@ -1,5 +1,7 @@
 export default class AccountItem {
     constructor() {
+        this.totalBuyAmount = 0;
+        this.totalGainsLosses = 0;
         this.template = document.querySelector("#accountsItem");
     }
     toLocalStringRounded(value) {
@@ -15,6 +17,8 @@ export default class AccountItem {
         const gainsLosses = difference * volume;
         const appraisalPrice = buy_price + gainsLosses;
         const returnRate = (difference / avg_buy_price) * 100;
+        this.totalBuyAmount += buy_price;
+        this.totalGainsLosses += gainsLosses;
         const values = {
             h3: currency,
             ".volume": volume.toString(),
@@ -33,6 +37,22 @@ export default class AccountItem {
             el.textContent = unit_currency;
         });
         return element;
+    }
+    tradeAsset(asset) {
+        const { balance, locked } = asset;
+        const amount = Number(balance) + Number(locked);
+        const totalAmount = this.totalBuyAmount + amount;
+        const totalAppraisalPrice = this.totalBuyAmount + this.totalGainsLosses;
+        document.querySelector(".amount .value").textContent =
+            Math.round(amount).toLocaleString();
+        document.querySelector(".totalAmount .value").textContent =
+            Math.round(totalAmount).toLocaleString();
+        document.querySelector(".totalBuyAmount .value").textContent =
+            Math.round(this.totalBuyAmount).toLocaleString();
+        document.querySelector(".totalGainsLosses .value").textContent =
+            Math.round(this.totalGainsLosses).toLocaleString();
+        document.querySelector(".totalAppraisalPrice .value").textContent =
+            Math.round(totalAppraisalPrice).toLocaleString();
     }
 }
 //# sourceMappingURL=AccountItem.js.map
