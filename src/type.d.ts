@@ -1,4 +1,5 @@
 interface Account {
+    market: string;
     balance: number;
     currency: string;
     locked: number;

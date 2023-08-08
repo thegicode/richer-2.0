@@ -1,5 +1,7 @@
+import { OrderAsk } from "./OrderAsk";
 export default class AccountItem {
     constructor() {
+        this.market = "";
         this.totalBuyAmount = 0;
         this.totalGainsLosses = 0;
         this.template = document.querySelector("#accountsItem");
@@ -12,7 +14,8 @@ export default class AccountItem {
             console.error("Template is not found.");
             return null;
         }
-        const { avg_buy_price, buy_price, currency, unit_currency, volume, trade_price, } = data;
+        const { market, avg_buy_price, buy_price, currency, unit_currency, volume, trade_price, } = data;
+        this.market = market;
         const difference = trade_price - avg_buy_price;
         const gainsLosses = difference * volume;
         const appraisalPrice = buy_price + gainsLosses;
@@ -36,7 +39,12 @@ export default class AccountItem {
         element.querySelectorAll(".unit").forEach((el) => {
             el.textContent = unit_currency;
         });
+        this.handleOrder(element, trade_price, avg_buy_price);
         return element;
+    }
+    handleOrder(element, trade_price, avg_buy_price) {
+        const askButton = element.querySelector(".askButton");
+        new OrderAsk(this.market, askButton, element, trade_price, avg_buy_price);
     }
     tradeAsset(asset) {
         const { balance, locked } = asset;

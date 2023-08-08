@@ -1,9 +1,10 @@
+import { OrderAsk } from "./OrderAsk";
+
 export default class AccountItem {
     private template: HTMLTemplateElement | null;
+    private market: string = "";
     private totalBuyAmount = 0; // 총 매수금액
     private totalGainsLosses = 0; // 총 평가손익
-    // private totalReturnRates = 0;
-    // private size = 0;
 
     constructor() {
         this.template = document.querySelector("#accountsItem");
@@ -20,6 +21,7 @@ export default class AccountItem {
         }
 
         const {
+            market,
             avg_buy_price, // 매수평균가
             // avg_buy_price_modified,  // 매수평균가 수정 여부
             // balance, // 주문가능 금액/수량
@@ -31,6 +33,8 @@ export default class AccountItem {
             trade_price, // 현재 가격
         } = data;
 
+        this.market = market;
+
         const difference = trade_price - avg_buy_price;
         const gainsLosses = difference * volume;
         const appraisalPrice = buy_price + gainsLosses;
@@ -38,8 +42,6 @@ export default class AccountItem {
 
         this.totalBuyAmount += buy_price;
         this.totalGainsLosses += gainsLosses;
-        // this.totalReturnRates += returnRate;
-        // this.size += 1;
 
         const values = {
             h3: currency,
@@ -62,7 +64,26 @@ export default class AccountItem {
             el.textContent = unit_currency;
         });
 
+        this.handleOrder(element, trade_price, avg_buy_price);
+
         return element;
+    }
+
+    handleOrder(
+        element: HTMLElement,
+        trade_price: number,
+        avg_buy_price: number
+    ) {
+        const askButton = element.querySelector(
+            ".askButton"
+        ) as HTMLButtonElement;
+        new OrderAsk(
+            this.market,
+            askButton,
+            element,
+            trade_price,
+            avg_buy_price
+        );
     }
 
     tradeAsset(asset: Asset) {
@@ -90,8 +111,5 @@ export default class AccountItem {
         for (const [selector, value] of Object.entries(values)) {
             document.querySelector(selector)!.textContent = value;
         }
-
-        // document.querySelector(".totalReturnRate .value")!.textContent =
-        // totalReturnRate.toFixed(2);
     }
 }

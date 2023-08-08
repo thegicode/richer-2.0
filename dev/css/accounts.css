@@ -4,6 +4,10 @@ body {
   margin: 0;
 }
 
+button {
+  cursor: pointer;
+}
+
 h1 {
   margin: 1rem;
   font-size: 1.5rem;
@@ -59,8 +63,30 @@ ul {
   font-weight: bold;
   color: #c948c9;
 }
-.accountsList li .actions {
+.accountsList .actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
   padding: 1rem 0;
+}
+.accountsList .actions button {
+  width: 100%;
+  border-radius: 10px;
+  border: none;
+  padding: 10px 2rem;
+  border: 1px solid #b2dbff;
+  background: #d2e9fd;
+  color: #435c80;
+  font-weight: bold;
+  cursor: pointer;
+}
+.accountsList .actions button:hover {
+  border-color: #7eacd4;
+  color: #2a4162;
+}
+.accountsList .actions button:disabled {
+  pointer-events: none;
+  opacity: 0.5;
 }
 
 .unit,
@@ -68,6 +94,70 @@ ul {
   margin-left: 0.5rem;
   font-size: 12px;
   color: #666;
+}
+
+.backdrop {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 20, 30, 0.7);
+}
+
+.askOrder {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  border-radius: 10px;
+}
+.askOrder h4 {
+  color: #174975;
+}
+.askOrder dl {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.askOrder dt,
+.askOrder dd {
+  margin: 10px 0;
+}
+.askOrder dt {
+  width: 30%;
+}
+.askOrder dd {
+  width: 70%;
+}
+.askOrder input {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 10px;
+}
+.askOrder .askPrice {
+  display: flex;
+}
+.askOrder .askPrice button {
+  padding: 0 1rem;
+}
+.askOrder .actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+.askOrder .actions button {
+  padding: 10px;
+}
+.askOrder .actions button[type=reset] {
+  width: 30%;
+}
+.askOrder .actions button[type=submit] {
+  flex: 1;
+}
+.askOrder .closeButton {
+  position: absolute;
+  top: 1rem;
+  right: 0;
 }
 
 /*# sourceMappingURL=accounts.css.map */

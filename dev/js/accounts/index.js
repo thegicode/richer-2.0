@@ -8,13 +8,117 @@
     return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
   };
 
+  // src/scripts/utils/fetchData.ts
+  async function fetchData(url, marketName) {
+    try {
+      let finalURL = url;
+      if (marketName) {
+        const params = new URLSearchParams({
+          market: marketName
+        }).toString();
+        finalURL = `${url}?${params}`;
+      }
+      const response = await fetch(finalURL, { method: "GET" });
+      return await response.json();
+    } catch (error) {
+      console.warn(error instanceof Error ? error.message : error);
+    }
+  }
+  var fetchData_default;
+  var init_fetchData = __esm({
+    "src/scripts/utils/fetchData.ts"() {
+      "use strict";
+      fetchData_default = fetchData;
+    }
+  });
+
+  // dev/scripts/pages/accounts/OrderAsk.js
+  var __awaiter, OrderAsk;
+  var init_OrderAsk = __esm({
+    "dev/scripts/pages/accounts/OrderAsk.js"() {
+      "use strict";
+      init_fetchData();
+      __awaiter = function(thisArg, _arguments, P, generator) {
+        function adopt(value) {
+          return value instanceof P ? value : new P(function(resolve) {
+            resolve(value);
+          });
+        }
+        return new (P || (P = Promise))(function(resolve, reject) {
+          function fulfilled(value) {
+            try {
+              step(generator.next(value));
+            } catch (e) {
+              reject(e);
+            }
+          }
+          function rejected(value) {
+            try {
+              step(generator["throw"](value));
+            } catch (e) {
+              reject(e);
+            }
+          }
+          function step(result) {
+            result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
+          }
+          step((generator = generator.apply(thisArg, _arguments || [])).next());
+        });
+      };
+      OrderAsk = class {
+        constructor(market, askButton, parentElement, tradePrice, avg_buy_price) {
+          this.market = market;
+          this.askButton = askButton;
+          this.parentElement = parentElement;
+          this.template = document.querySelector("#askOrder");
+          this.tradePrice = tradePrice;
+          this.avgBuyPrice = avg_buy_price;
+          this.iniitialize();
+        }
+        iniitialize() {
+          this.askButton.addEventListener("click", this.onClick.bind(this));
+        }
+        onClick() {
+          var _a;
+          const template = (_a = this.template) === null || _a === void 0 ? void 0 : _a.content.firstElementChild;
+          const element = template === null || template === void 0 ? void 0 : template.cloneNode(true);
+          this.renderOrder(element);
+          this.removeOrder(element);
+          this.parentElement.appendChild(element);
+        }
+        renderOrder(element) {
+          return __awaiter(this, void 0, void 0, function* () {
+            this.askButton.disabled = true;
+            const marketName = this.market;
+            const data = yield fetchData_default("/getChance", marketName);
+            const { ask_fee, market, ask_account } = data;
+            const { currency, balance, locked, avg_buy_price, avg_buy_price_modified, unit_currency } = ask_account;
+            const askPrice = this.avgBuyPrice + this.avgBuyPrice * 0.1;
+            element.querySelector(".balance .value").textContent = balance;
+            element.querySelector(".balance .unit").textContent = unit_currency;
+            element.querySelector(".askPrice input").value = askPrice.toString();
+          });
+        }
+        removeOrder(element) {
+          const closeButton = element === null || element === void 0 ? void 0 : element.querySelector(".closeButton");
+          closeButton === null || closeButton === void 0 ? void 0 : closeButton.addEventListener("click", () => {
+            this.parentElement.removeChild(element);
+            this.askButton.disabled = false;
+          });
+        }
+      };
+    }
+  });
+
   // dev/scripts/pages/accounts/AccountItem.js
   var AccountItem;
   var init_AccountItem = __esm({
     "dev/scripts/pages/accounts/AccountItem.js"() {
       "use strict";
+      init_OrderAsk();
       AccountItem = class {
         constructor() {
+          this.market = "";
           this.totalBuyAmount = 0;
           this.totalGainsLosses = 0;
           this.template = document.querySelector("#accountsItem");
@@ -27,7 +131,8 @@
             console.error("Template is not found.");
             return null;
           }
-          const { avg_buy_price, buy_price, currency, unit_currency, volume, trade_price } = data;
+          const { market, avg_buy_price, buy_price, currency, unit_currency, volume, trade_price } = data;
+          this.market = market;
           const difference = trade_price - avg_buy_price;
           const gainsLosses = difference * volume;
           const appraisalPrice = buy_price + gainsLosses;
@@ -51,7 +156,12 @@
           element.querySelectorAll(".unit").forEach((el) => {
             el.textContent = unit_currency;
           });
+          this.handleOrder(element, trade_price, avg_buy_price);
           return element;
+        }
+        handleOrder(element, trade_price, avg_buy_price) {
+          const askButton = element.querySelector(".askButton");
+          new OrderAsk(this.market, askButton, element, trade_price, avg_buy_price);
         }
         tradeAsset(asset) {
           const { balance, locked } = asset;
@@ -79,7 +189,8 @@
   var require_accounts = __commonJS({
     "dev/scripts/pages/accounts/index.js"(exports) {
       init_AccountItem();
-      var __awaiter = exports && exports.__awaiter || function(thisArg, _arguments, P, generator) {
+      init_fetchData();
+      var __awaiter2 = exports && exports.__awaiter || function(thisArg, _arguments, P, generator) {
         function adopt(value) {
           return value instanceof P ? value : new P(function(resolve) {
             resolve(value);
@@ -110,28 +221,15 @@
         constructor() {
           this.initializeAccounts();
         }
-        fetchData(url) {
-          return __awaiter(this, void 0, void 0, function* () {
-            try {
-              const response = yield fetch(url, { method: "GET" });
-              const data = yield response.json();
-              return data;
-            } catch (error) {
-              console.warn(error instanceof Error ? error.message : error);
-            }
-          });
-        }
         initializeAccounts() {
-          return __awaiter(this, void 0, void 0, function* () {
-            const { krwAsset, myMarkets } = yield this.fetchData("/getAccounts");
+          return __awaiter2(this, void 0, void 0, function* () {
+            const { krwAsset, myMarkets } = yield fetchData_default("/getAccounts");
             this.updateAccountsWithTickers(myMarkets, krwAsset);
           });
         }
         updateAccountsWithTickers(myAccounts, krwAsset) {
-          return __awaiter(this, void 0, void 0, function* () {
-            const tickers = yield this.fetchData("/getTickers");
-            const chance = yield this.fetchData("/getChance");
-            console.log(chance);
+          return __awaiter2(this, void 0, void 0, function* () {
+            const tickers = yield fetchData_default("/getTickers");
             this.combineAccountsWithTickers(myAccounts, tickers, krwAsset);
           });
         }

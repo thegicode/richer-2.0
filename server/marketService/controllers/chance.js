@@ -2,9 +2,9 @@ const { authorizationTokenBody } = require("../../env/token");
 const UPBIT_URL = require("../../env/url");
 const { getJSON } = require("../utils/apiRequest");
 
-module.exports = async () => {
+module.exports = async (req) => {
     const body = {
-        market: "KRW-XRP",
+        market: req.query.market,
     };
 
     const { query, token } = authorizationTokenBody(body);

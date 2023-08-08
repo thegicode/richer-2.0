@@ -1,22 +1,13 @@
 import AccountItem from "./AccountItem";
+import fetchData from "@src/scripts/utils/fetchData";
 
 class AccountManager {
     constructor() {
         this.initializeAccounts();
     }
 
-    private async fetchData(url: string) {
-        try {
-            const response = await fetch(url, { method: "GET" });
-            const data = await response.json();
-            return data;
-        } catch (error) {
-            console.warn(error instanceof Error ? error.message : error);
-        }
-    }
-
     private async initializeAccounts() {
-        const { krwAsset, myMarkets } = await this.fetchData("/getAccounts");
+        const { krwAsset, myMarkets } = await fetchData("/getAccounts");
         this.updateAccountsWithTickers(myMarkets, krwAsset);
     }
 
@@ -24,10 +15,7 @@ class AccountManager {
         myAccounts: Account[],
         krwAsset: Asset
     ) {
-        const tickers = await this.fetchData("/getTickers");
-        const chance = await this.fetchData("/getChance");
-
-        console.log(chance);
+        const tickers = await fetchData("/getTickers");
 
         this.combineAccountsWithTickers(myAccounts, tickers, krwAsset);
     }

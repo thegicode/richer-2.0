@@ -3,7 +3,7 @@
 const handleRequest = (fn) => {
     return async (req, res, next) => {
         try {
-            const data = await fn();
+            const data = await fn(req);
             res.send(data);
         } catch (error) {
             next(error);
@@ -11,7 +11,7 @@ const handleRequest = (fn) => {
     };
 };
 
-const handleError = (error, req, res, next) => {
+const handleError = (error, req, res) => {
     console.warn(error.message);
     res.status(500).send({ error: error.message });
 };

@@ -8,33 +8,20 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import AccountItem from "./AccountItem";
+import fetchData from "@src/scripts/utils/fetchData";
 class AccountManager {
     constructor() {
         this.initializeAccounts();
     }
-    fetchData(url) {
-        return __awaiter(this, void 0, void 0, function* () {
-            try {
-                const response = yield fetch(url, { method: "GET" });
-                const data = yield response.json();
-                return data;
-            }
-            catch (error) {
-                console.warn(error instanceof Error ? error.message : error);
-            }
-        });
-    }
     initializeAccounts() {
         return __awaiter(this, void 0, void 0, function* () {
-            const { krwAsset, myMarkets } = yield this.fetchData("/getAccounts");
+            const { krwAsset, myMarkets } = yield fetchData("/getAccounts");
             this.updateAccountsWithTickers(myMarkets, krwAsset);
         });
     }
     updateAccountsWithTickers(myAccounts, krwAsset) {
         return __awaiter(this, void 0, void 0, function* () {
-            const tickers = yield this.fetchData("/getTickers");
-            const chance = yield this.fetchData("/getChance");
-            console.log(chance);
+            const tickers = yield fetchData("/getTickers");
             this.combineAccountsWithTickers(myAccounts, tickers, krwAsset);
         });
     }

@@ -4,6 +4,10 @@ body {
     margin: 0;
 }
 
+button {
+    cursor: pointer;
+}
+
 h1 {
     margin: 1rem;
     font-size: 1.5rem;
@@ -66,9 +70,30 @@ ul {
             font-weight: bold;
             color: #c948c9;
         }
-
-        .actions {
-            padding: 1rem 0;
+    }
+    .actions {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        padding: 1rem 0;
+        button {
+            width: 100%;
+            border-radius: 10px;
+            border: none;
+            padding: 10px 2rem;
+            border: 1px solid #b2dbff;
+            background: #d2e9fd;
+            color: #435c80;
+            font-weight: bold;
+            cursor: pointer;
+            &:hover {
+                border-color: #7eacd4;
+                color: #2a4162;
+            }
+            &:disabled {
+                pointer-events: none;
+                opacity: 0.5;
+            }
         }
     }
 }
@@ -80,20 +105,81 @@ ul {
     color: #666;
 }
 
-// table {
-//     width: 100%;
-//     border-collapse: collapse;
-//     border-spacing: 0;
-// }
+.backdrop {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0, 20, 30, 0.7);
+}
 
-// th {
-//     font-weight: normal;
-// }
+.askOrder {
+    display: flex;
+    flex-direction: column;
 
-// th,
-// td {
-//     padding: 5px;
-//     border: 1px solid #ddd;
-//     font-size: 14px;
-//     text-align: center;
-// }
+    position: relative;
+    // top: 1rem;
+    // left: 1rem;
+    // right: 1rem;
+    // z-index: 100;
+
+    // padding: 1rem;
+    // background-color: aliceblue;
+    // border: 1px solid #c7dcee;
+    border-radius: 10px;
+
+    h4 {
+        color: #174975;
+    }
+
+    dl {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+    }
+
+    dt,
+    dd {
+        margin: 10px 0;
+    }
+
+    dt {
+        width: 30%;
+    }
+    dd {
+        width: 70%;
+    }
+    input {
+        box-sizing: border-box;
+        width: 100%;
+        padding: 10px;
+    }
+
+    .askPrice {
+        display: flex;
+        button {
+            padding: 0 1rem;
+        }
+    }
+    .actions {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        button {
+            padding: 10px;
+        }
+        button[type="reset"] {
+            width: 30%;
+        }
+        button[type="submit"] {
+            flex: 1;
+        }
+    }
+
+    .closeButton {
+        position: absolute;
+        top: 1rem;
+        right: 0;
+    }
+}
