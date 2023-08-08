@@ -52,25 +52,6 @@ ul {
 .accountsList {
     margin: 0 1rem;
 
-    li {
-        padding: 0 1rem;
-        margin-bottom: 1rem;
-        border: 1px solid #dae9f6;
-        border-radius: 10px;
-        background: aliceblue;
-
-        div {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border-top: 1px dashed #dae9f6;
-        }
-
-        .value {
-            font-weight: bold;
-            color: #c948c9;
-        }
-    }
     .actions {
         display: flex;
         justify-content: space-between;
@@ -98,20 +79,32 @@ ul {
     }
 }
 
+.accountItem {
+    overflow: hidden;
+    padding: 0 1rem;
+    margin-bottom: 1rem;
+    border: 1px solid #dae9f6;
+    border-radius: 10px;
+    background: aliceblue;
+
+    .item-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-top: 1px dashed #dae9f6;
+    }
+
+    p .value {
+        font-weight: bold;
+        color: #c948c9;
+    }
+}
+
 .unit,
 .percent {
     margin-left: 0.5rem;
     font-size: 12px;
     color: #666;
-}
-
-.backdrop {
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    background-color: rgba(0, 20, 30, 0.7);
 }
 
 .askOrder {
@@ -124,19 +117,25 @@ ul {
     // right: 1rem;
     // z-index: 100;
 
-    // padding: 1rem;
+    margin: 0 -1rem;
+
+    padding: 1rem;
     // background-color: aliceblue;
-    // border: 1px solid #c7dcee;
-    border-radius: 10px;
+    border-top: 1px solid #c7dcee;
+
+    background: #fefff4;
 
     h4 {
-        color: #174975;
+        margin: 1rem 0;
+        color: #666;
     }
 
     dl {
         display: flex;
         flex-wrap: wrap;
         align-items: center;
+        font-size: 14px;
+        color: #666;
     }
 
     dt,
@@ -146,29 +145,45 @@ ul {
 
     dt {
         width: 30%;
+        small {
+            margin-left: 5px;
+        }
     }
     dd {
+        display: flex;
+        justify-content: flex-end;
+        box-sizing: border-box;
         width: 70%;
+        padding-left: 10px;
     }
     input {
         box-sizing: border-box;
+        border-radius: 5px;
         width: 100%;
         padding: 10px;
+        border: 1px solid #dbdbdb;
+        text-align: right;
+        color: #715c4c;
+        &:focus-visible {
+            outline: #ad9b8d auto 1px;
+        }
+    }
+
+    .balance {
+        align-items: center;
+        color: #715c4c;
     }
 
     .askPrice {
-        display: flex;
         button {
-            padding: 0 1rem;
+            padding: 0 14px;
+            font-size: 1.5rem;
         }
     }
-    .actions {
+    .askOrder-actions {
         display: flex;
         justify-content: space-between;
         gap: 10px;
-        button {
-            padding: 10px;
-        }
         button[type="reset"] {
             width: 30%;
         }
@@ -177,9 +192,42 @@ ul {
         }
     }
 
+    button {
+        border-radius: 5px;
+        border: none;
+        padding: 8px 0;
+        border: 1px solid #eae3dd;
+        background: #f7f9f4;
+        color: #afa399;
+        font-weight: normal;
+        cursor: pointer;
+        &:hover {
+            border-color: #e2d8d0;
+            color: #8f8074;
+        }
+        &:disabled {
+            pointer-events: none;
+            opacity: 0.5;
+        }
+        &:focus-visible {
+            outline: #ad9b8d auto 1px;
+        }
+    }
+
     .closeButton {
         position: absolute;
         top: 1rem;
-        right: 0;
+        right: 1rem;
+        padding: 5px 10px;
+        font-size: 11px;
     }
+}
+
+.backdrop {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0, 20, 30, 0.7);
 }

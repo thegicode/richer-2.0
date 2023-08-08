@@ -7,6 +7,7 @@ class OrderAsk {
     private template: HTMLTemplateElement | null;
     private tradePrice: number;
     private avgBuyPrice: number;
+    private data: I_ChanceResponse | null;
 
     constructor(
         market: string,
@@ -21,6 +22,7 @@ class OrderAsk {
         this.template = document.querySelector("#askOrder");
         this.tradePrice = tradePrice;
         this.avgBuyPrice = avg_buy_price;
+        this.data = null;
 
         this.iniitialize();
     }
@@ -29,15 +31,8 @@ class OrderAsk {
         const marketName = this.market;
 
         const data = await fetchData("/getChance", marketName);
-        const { ask_fee, market, ask_account } = data;
-        const {
-            currency,
-            balance,
-            locked,
-            avg_buy_price,
-            avg_buy_price_modified,
-            unit_currency,
-        } = ask_account;
+        this.data = data;
+        const { balance } = data.ask_account;
 
         if (Number(balance) === 0) {
             this.askButton.remove();
@@ -58,24 +53,29 @@ class OrderAsk {
     }
 
     private async renderOrder(element: HTMLElement) {
-        const marketName = this.market;
+        if (!this.data) return;
 
-        const data = await fetchData("/getChance", marketName);
-        const { ask_fee, market, ask_account } = data;
+        this.askButton.disabled = true;
+
+        const data = this.data;
         const {
-            currency,
+            // ask_fee,
+            // market,
+            ask_account,
+        } = data;
+        const {
+            // currency,
             balance,
-            locked,
-            avg_buy_price,
-            avg_buy_price_modified,
+            // locked,
+            // avg_buy_price,
+            // avg_buy_price_modified,
             unit_currency,
         } = ask_account;
 
         const askPrice = this.avgBuyPrice + this.avgBuyPrice * 0.1;
 
-        this.askButton.disabled = true;
-
-        element.querySelector(".balance .value")!.textContent = balance;
+        element.querySelector(".balance .value")!.textContent =
+            balance.toString();
         element.querySelector(".balance .unit")!.textContent = unit_currency;
         (element.querySelector(".askPrice input") as HTMLInputElement).value =
             askPrice.toString();

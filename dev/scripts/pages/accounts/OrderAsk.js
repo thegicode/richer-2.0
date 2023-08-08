@@ -16,14 +16,15 @@ class OrderAsk {
         this.template = document.querySelector("#askOrder");
         this.tradePrice = tradePrice;
         this.avgBuyPrice = avg_buy_price;
+        this.data = null;
         this.iniitialize();
     }
     iniitialize() {
         return __awaiter(this, void 0, void 0, function* () {
             const marketName = this.market;
             const data = yield fetchData("/getChance", marketName);
-            const { ask_fee, market, ask_account } = data;
-            const { currency, balance, locked, avg_buy_price, avg_buy_price_modified, unit_currency, } = ask_account;
+            this.data = data;
+            const { balance } = data.ask_account;
             if (Number(balance) === 0) {
                 this.askButton.remove();
                 return;
@@ -41,13 +42,15 @@ class OrderAsk {
     }
     renderOrder(element) {
         return __awaiter(this, void 0, void 0, function* () {
-            const marketName = this.market;
-            const data = yield fetchData("/getChance", marketName);
-            const { ask_fee, market, ask_account } = data;
-            const { currency, balance, locked, avg_buy_price, avg_buy_price_modified, unit_currency, } = ask_account;
-            const askPrice = this.avgBuyPrice + this.avgBuyPrice * 0.1;
+            if (!this.data)
+                return;
             this.askButton.disabled = true;
-            element.querySelector(".balance .value").textContent = balance;
+            const data = this.data;
+            const { ask_account, } = data;
+            const { balance, unit_currency, } = ask_account;
+            const askPrice = this.avgBuyPrice + this.avgBuyPrice * 0.1;
+            element.querySelector(".balance .value").textContent =
+                balance.toString();
             element.querySelector(".balance .unit").textContent = unit_currency;
             element.querySelector(".askPrice input").value =
                 askPrice.toString();

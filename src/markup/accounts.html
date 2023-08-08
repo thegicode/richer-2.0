@@ -75,43 +75,43 @@
         <!-- <div id="backdrop" class="backdrop" hidden></div> -->
 
         <template id="accountsItem">
-            <li>
+            <li class="accountItem">
                 <h3></h3>
-                <div>
+                <div class="item-row">
                     <p>평가손익 :</p>
                     <p class="gainsLosses">
                         <span class="value"></span>
                         <span class="unit"></span>
                     </p>
                 </div>
-                <div>
+                <div class="item-row">
                     <p>수익률 :</p>
                     <p class="returnRate">
                         <span class="value"></span>
                         <span class="percent">%</span>
                     </p>
                 </div>
-                <div>
+                <div class="item-row">
                     <p>보유수량 :</p>
                     <p class="volume">
                         <span class="value"></span>
                     </p>
                 </div>
-                <div>
+                <div class="item-row">
                     <p>매수평균가 :</p>
                     <p class="avgBuyPrice">
                         <span class="value"></span>
                         <span class="unit"></span>
                     </p>
                 </div>
-                <div>
+                <div class="item-row">
                     <p>평가금액 :</p>
                     <p class="appraisalPrice">
                         <span class="value"></span>
                         <span class="unit"></span>
                     </p>
                 </div>
-                <div>
+                <div class="item-row">
                     <p>매수금액 :</p>
                     <p class="buyPrice">
                         <span class="value"></span>
@@ -132,7 +132,7 @@
                     <dl>
                         <dt>주문가능</dt>
                         <dd class="balance">
-                            <strong class="value"></strong>
+                            <span class="value"></span>
                             <small class="unit"></small>
                         </dd>
                         <dt>매도가격<small>(KRW)</small></dt>
@@ -150,7 +150,7 @@
                             <input type="number" name="totalPrice" />
                         </dd>
                     </dl>
-                    <div class="actions">
+                    <div class="askOrder-actions">
                         <button type="reset">초기화</button>
                         <button type="submit">매도</button>
                     </div>

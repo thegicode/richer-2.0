@@ -46,23 +46,6 @@ ul {
 .accountsList {
   margin: 0 1rem;
 }
-.accountsList li {
-  padding: 0 1rem;
-  margin-bottom: 1rem;
-  border: 1px solid #dae9f6;
-  border-radius: 10px;
-  background: aliceblue;
-}
-.accountsList li div {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-top: 1px dashed #dae9f6;
-}
-.accountsList li .value {
-  font-weight: bold;
-  color: #c948c9;
-}
 .accountsList .actions {
   display: flex;
   justify-content: space-between;
@@ -89,11 +72,127 @@ ul {
   opacity: 0.5;
 }
 
+.accountItem {
+  overflow: hidden;
+  padding: 0 1rem;
+  margin-bottom: 1rem;
+  border: 1px solid #dae9f6;
+  border-radius: 10px;
+  background: aliceblue;
+}
+.accountItem .item-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px dashed #dae9f6;
+}
+.accountItem p .value {
+  font-weight: bold;
+  color: #c948c9;
+}
+
 .unit,
 .percent {
   margin-left: 0.5rem;
   font-size: 12px;
   color: #666;
+}
+
+.askOrder {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  margin: 0 -1rem;
+  padding: 1rem;
+  border-top: 1px solid #c7dcee;
+  background: #fefff4;
+}
+.askOrder h4 {
+  margin: 1rem 0;
+  color: #666;
+}
+.askOrder dl {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  font-size: 14px;
+  color: #666;
+}
+.askOrder dt,
+.askOrder dd {
+  margin: 10px 0;
+}
+.askOrder dt {
+  width: 30%;
+}
+.askOrder dt small {
+  margin-left: 5px;
+}
+.askOrder dd {
+  display: flex;
+  justify-content: flex-end;
+  box-sizing: border-box;
+  width: 70%;
+  padding-left: 10px;
+}
+.askOrder input {
+  box-sizing: border-box;
+  border-radius: 5px;
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #dbdbdb;
+  text-align: right;
+  color: #715c4c;
+}
+.askOrder input:focus-visible {
+  outline: #ad9b8d auto 1px;
+}
+.askOrder .balance {
+  align-items: center;
+  color: #715c4c;
+}
+.askOrder .askPrice button {
+  padding: 0 14px;
+  font-size: 1.5rem;
+}
+.askOrder .askOrder-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+.askOrder .askOrder-actions button[type=reset] {
+  width: 30%;
+}
+.askOrder .askOrder-actions button[type=submit] {
+  flex: 1;
+}
+.askOrder button {
+  border-radius: 5px;
+  border: none;
+  padding: 8px 0;
+  border: 1px solid #eae3dd;
+  background: #f7f9f4;
+  color: #afa399;
+  font-weight: normal;
+  cursor: pointer;
+}
+.askOrder button:hover {
+  border-color: #e2d8d0;
+  color: #8f8074;
+}
+.askOrder button:disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
+.askOrder button:focus-visible {
+  outline: #ad9b8d auto 1px;
+}
+.askOrder .closeButton {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  padding: 5px 10px;
+  font-size: 11px;
 }
 
 .backdrop {
@@ -103,61 +202,6 @@ ul {
   bottom: 0;
   left: 0;
   background-color: rgba(0, 20, 30, 0.7);
-}
-
-.askOrder {
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  border-radius: 10px;
-}
-.askOrder h4 {
-  color: #174975;
-}
-.askOrder dl {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-}
-.askOrder dt,
-.askOrder dd {
-  margin: 10px 0;
-}
-.askOrder dt {
-  width: 30%;
-}
-.askOrder dd {
-  width: 70%;
-}
-.askOrder input {
-  box-sizing: border-box;
-  width: 100%;
-  padding: 10px;
-}
-.askOrder .askPrice {
-  display: flex;
-}
-.askOrder .askPrice button {
-  padding: 0 1rem;
-}
-.askOrder .actions {
-  display: flex;
-  justify-content: space-between;
-  gap: 10px;
-}
-.askOrder .actions button {
-  padding: 10px;
-}
-.askOrder .actions button[type=reset] {
-  width: 30%;
-}
-.askOrder .actions button[type=submit] {
-  flex: 1;
-}
-.askOrder .closeButton {
-  position: absolute;
-  top: 1rem;
-  right: 0;
 }
 
 /*# sourceMappingURL=accounts.css.map */

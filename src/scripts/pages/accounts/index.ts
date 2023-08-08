@@ -12,8 +12,8 @@ class AccountManager {
     }
 
     private async updateAccountsWithTickers(
-        myAccounts: Account[],
-        krwAsset: Asset
+        myAccounts: I_MyAccount[],
+        krwAsset: I_Asset
     ) {
         const tickers = await fetchData("/getTickers");
 
@@ -21,9 +21,9 @@ class AccountManager {
     }
 
     private combineAccountsWithTickers(
-        myAccounts: Account[],
-        ticekrs: Ticker[],
-        krwAsset: Asset
+        myAccounts: I_MyAccount[],
+        ticekrs: I_Ticker[],
+        krwAsset: I_Asset
     ) {
         try {
             const data = myAccounts.map((account, index) => {
@@ -41,7 +41,7 @@ class AccountManager {
         }
     }
 
-    private displayAccounts(myAccounts: AccountExtend[], krwAsset: Asset) {
+    private displayAccounts(myAccounts: I_AccountItem[], krwAsset: I_Asset) {
         const accountItem = new AccountItem();
         const fragment = new DocumentFragment();
 

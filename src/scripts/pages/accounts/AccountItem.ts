@@ -14,7 +14,7 @@ export default class AccountItem {
         return Math.round(value).toLocaleString();
     }
 
-    render(data: AccountExtend): HTMLElement | null {
+    render(data: I_AccountItem): HTMLElement | null {
         if (!this.template) {
             console.error("Template is not found.");
             return null;
@@ -86,7 +86,7 @@ export default class AccountItem {
         );
     }
 
-    tradeAsset(asset: Asset) {
+    tradeAsset(asset: I_Asset) {
         const { balance, locked } = asset;
         const amount = Number(balance) + Number(locked); // 보유 KRW
         const totalAmount = this.totalBuyAmount + amount; // 총 보유자산
