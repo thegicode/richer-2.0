@@ -19,7 +19,17 @@ class OrderAsk {
         this.iniitialize();
     }
     iniitialize() {
-        this.askButton.addEventListener("click", this.onClick.bind(this));
+        return __awaiter(this, void 0, void 0, function* () {
+            const marketName = this.market;
+            const data = yield fetchData("/getChance", marketName);
+            const { ask_fee, market, ask_account } = data;
+            const { currency, balance, locked, avg_buy_price, avg_buy_price_modified, unit_currency, } = ask_account;
+            if (Number(balance) === 0) {
+                this.askButton.remove();
+                return;
+            }
+            this.askButton.addEventListener("click", this.onClick.bind(this));
+        });
     }
     onClick() {
         var _a;
@@ -31,12 +41,12 @@ class OrderAsk {
     }
     renderOrder(element) {
         return __awaiter(this, void 0, void 0, function* () {
-            this.askButton.disabled = true;
             const marketName = this.market;
             const data = yield fetchData("/getChance", marketName);
             const { ask_fee, market, ask_account } = data;
             const { currency, balance, locked, avg_buy_price, avg_buy_price_modified, unit_currency, } = ask_account;
             const askPrice = this.avgBuyPrice + this.avgBuyPrice * 0.1;
+            this.askButton.disabled = true;
             element.querySelector(".balance .value").textContent = balance;
             element.querySelector(".balance .unit").textContent = unit_currency;
             element.querySelector(".askPrice input").value =

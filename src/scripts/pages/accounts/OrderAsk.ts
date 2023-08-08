@@ -25,7 +25,25 @@ class OrderAsk {
         this.iniitialize();
     }
 
-    iniitialize() {
+    private async iniitialize() {
+        const marketName = this.market;
+
+        const data = await fetchData("/getChance", marketName);
+        const { ask_fee, market, ask_account } = data;
+        const {
+            currency,
+            balance,
+            locked,
+            avg_buy_price,
+            avg_buy_price_modified,
+            unit_currency,
+        } = ask_account;
+
+        if (Number(balance) === 0) {
+            this.askButton.remove();
+            return;
+        }
+
         this.askButton.addEventListener("click", this.onClick.bind(this));
     }
 
@@ -40,12 +58,9 @@ class OrderAsk {
     }
 
     private async renderOrder(element: HTMLElement) {
-        this.askButton.disabled = true;
-
         const marketName = this.market;
 
         const data = await fetchData("/getChance", marketName);
-
         const { ask_fee, market, ask_account } = data;
         const {
             currency,
@@ -57,6 +72,8 @@ class OrderAsk {
         } = ask_account;
 
         const askPrice = this.avgBuyPrice + this.avgBuyPrice * 0.1;
+
+        this.askButton.disabled = true;
 
         element.querySelector(".balance .value")!.textContent = balance;
         element.querySelector(".balance .unit")!.textContent = unit_currency;
