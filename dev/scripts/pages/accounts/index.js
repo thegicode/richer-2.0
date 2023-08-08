@@ -45,11 +45,11 @@ class AccountManager {
         myAccounts
             .map((account) => accountItem.render(account))
             .forEach((element) => fragment.appendChild(element));
-        (_a = document.querySelector(".accountsList")) === null || _a === void 0 ? void 0 : _a.appendChild(fragment);
-        accountItem.tradeAsset(krwAsset);
+        (_a = document.querySelector(".accounts-list")) === null || _a === void 0 ? void 0 : _a.appendChild(fragment);
+        accountItem.overviewAssets(krwAsset);
     }
     displayAccountsFail() {
-        document.querySelector(".tradeState").textContent =
+        document.querySelector(".assets-overview").textContent =
             "자료를 가져오지 못했습니다.";
     }
 }

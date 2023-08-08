@@ -49,13 +49,13 @@ class AccountManager {
             .map((account) => accountItem.render(account))
             .forEach((element) => fragment.appendChild(element!));
 
-        document.querySelector(".accountsList")?.appendChild(fragment);
+        document.querySelector(".accounts-list")?.appendChild(fragment);
 
-        accountItem.tradeAsset(krwAsset);
+        accountItem.overviewAssets(krwAsset);
     }
 
     private displayAccountsFail() {
-        document.querySelector(".tradeState")!.textContent =
+        document.querySelector(".assets-overview")!.textContent =
             "자료를 가져오지 못했습니다.";
     }
 }

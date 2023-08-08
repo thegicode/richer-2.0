@@ -175,14 +175,14 @@
           const askButton = element.querySelector(".askButton");
           new OrderAsk(this.market, askButton, element, trade_price, avg_buy_price);
         }
-        tradeAsset(asset) {
+        overviewAssets(asset) {
           const { balance, locked } = asset;
           const amount = Number(balance) + Number(locked);
           const totalAmount = this.totalBuyAmount + amount;
           const totalAppraisalPrice = this.totalBuyAmount + this.totalGainsLosses;
           const totalReturnRate = this.totalGainsLosses / this.totalBuyAmount * 100;
           const values = {
-            ".amount .value": Math.round(amount).toLocaleString(),
+            ".asset-amount .value": Math.round(amount).toLocaleString(),
             ".totalAmount .value": Math.round(totalAmount).toLocaleString(),
             ".totalBuyAmount .value": Math.round(this.totalBuyAmount).toLocaleString(),
             ".totalGainsLosses .value": Math.round(this.totalGainsLosses).toLocaleString(),
@@ -262,11 +262,11 @@
           const accountItem = new AccountItem();
           const fragment = new DocumentFragment();
           myAccounts.map((account) => accountItem.render(account)).forEach((element) => fragment.appendChild(element));
-          (_a = document.querySelector(".accountsList")) === null || _a === void 0 ? void 0 : _a.appendChild(fragment);
-          accountItem.tradeAsset(krwAsset);
+          (_a = document.querySelector(".accounts-list")) === null || _a === void 0 ? void 0 : _a.appendChild(fragment);
+          accountItem.overviewAssets(krwAsset);
         }
         displayAccountsFail() {
-          document.querySelector(".tradeState").textContent = "\uC790\uB8CC\uB97C \uAC00\uC838\uC624\uC9C0 \uBABB\uD588\uC2B5\uB2C8\uB2E4.";
+          document.querySelector(".assets-overview").textContent = "\uC790\uB8CC\uB97C \uAC00\uC838\uC624\uC9C0 \uBABB\uD588\uC2B5\uB2C8\uB2E4.";
         }
       };
       new AccountManager();

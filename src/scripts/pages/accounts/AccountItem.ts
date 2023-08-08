@@ -86,7 +86,7 @@ export default class AccountItem {
         );
     }
 
-    tradeAsset(asset: I_Asset) {
+    overviewAssets(asset: I_Asset) {
         const { balance, locked } = asset;
         const amount = Number(balance) + Number(locked); // 보유 KRW
         const totalAmount = this.totalBuyAmount + amount; // 총 보유자산
@@ -95,7 +95,7 @@ export default class AccountItem {
             (this.totalGainsLosses / this.totalBuyAmount) * 100; // 총 평가수익률
 
         const values = {
-            ".amount .value": Math.round(amount).toLocaleString(),
+            ".asset-amount .value": Math.round(amount).toLocaleString(),
             ".totalAmount .value": Math.round(totalAmount).toLocaleString(),
             ".totalBuyAmount .value": Math.round(
                 this.totalBuyAmount

@@ -8,7 +8,7 @@ button {
   cursor: pointer;
 }
 
-h1 {
+.investment-title {
   margin: 1rem;
   font-size: 1.5rem;
 }
@@ -23,36 +23,37 @@ ul {
   padding: 0;
 }
 
-.tradeState {
+.assets-overview {
   margin-bottom: 2rem;
   padding: 1rem;
   border-top: 1px solid #ddd;
   border-bottom: 1px solid #ddd;
 }
-.tradeState li {
+
+.asset-item {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 8px 0;
 }
-.tradeState p {
+.asset-item p {
   margin: 0;
 }
-.tradeState .value {
+.asset-item .value {
   font-weight: bold;
   color: #c948c9;
 }
 
-.accountsList {
+.accounts-list {
   margin: 0 1rem;
 }
-.accountsList .actions {
+.accounts-list .actions {
   display: flex;
   justify-content: space-between;
   gap: 10px;
   padding: 1rem 0;
 }
-.accountsList .actions button {
+.accounts-list .actions button {
   width: 100%;
   border-radius: 10px;
   border: none;
@@ -63,16 +64,16 @@ ul {
   font-weight: bold;
   cursor: pointer;
 }
-.accountsList .actions button:hover {
+.accounts-list .actions button:hover {
   border-color: #7eacd4;
   color: #2a4162;
 }
-.accountsList .actions button:disabled {
+.accounts-list .actions button:disabled {
   pointer-events: none;
   opacity: 0.5;
 }
 
-.accountItem {
+.account-item {
   overflow: hidden;
   padding: 0 1rem;
   margin-bottom: 1rem;
@@ -80,13 +81,13 @@ ul {
   border-radius: 10px;
   background: aliceblue;
 }
-.accountItem .item-row {
+.account-item .item-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
   border-top: 1px dashed #dae9f6;
 }
-.accountItem p .value {
+.account-item p .value {
   font-weight: bold;
   color: #c948c9;
 }

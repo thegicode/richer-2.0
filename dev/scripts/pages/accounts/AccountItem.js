@@ -46,14 +46,14 @@ export default class AccountItem {
         const askButton = element.querySelector(".askButton");
         new OrderAsk(this.market, askButton, element, trade_price, avg_buy_price);
     }
-    tradeAsset(asset) {
+    overviewAssets(asset) {
         const { balance, locked } = asset;
         const amount = Number(balance) + Number(locked);
         const totalAmount = this.totalBuyAmount + amount;
         const totalAppraisalPrice = this.totalBuyAmount + this.totalGainsLosses;
         const totalReturnRate = (this.totalGainsLosses / this.totalBuyAmount) * 100;
         const values = {
-            ".amount .value": Math.round(amount).toLocaleString(),
+            ".asset-amount .value": Math.round(amount).toLocaleString(),
             ".totalAmount .value": Math.round(totalAmount).toLocaleString(),
             ".totalBuyAmount .value": Math.round(this.totalBuyAmount).toLocaleString(),
             ".totalGainsLosses .value": Math.round(this.totalGainsLosses).toLocaleString(),

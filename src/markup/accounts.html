@@ -20,47 +20,47 @@
         <script type="module" src="/js/accounts/index.js" async></script>
     </head>
     <body>
-        <div class="root">
-            <h1 class="accounts">투자내역</h1>
+        <div class="investment">
+            <h1 class="investment-title">투자내역</h1>
 
-            <ul class="tradeState">
+            <ul class="assets-overview">
                 <h2>보유자산</h2>
-                <li>
+                <li class="asset-item">
                     <p>보유 KRW</p>
-                    <p class="amount">
+                    <p class="asset-amount">
                         <span class="value"></span>
                         <span class="unit">KRW</span>
                     </p>
                 </li>
-                <li>
+                <li class="asset-item">
                     <p>총 보유자산</p>
                     <p class="totalAmount">
                         <span class="value"></span>
                         <span class="unit">KRW</span>
                     </p>
                 </li>
-                <li>
+                <li class="asset-item">
                     <p>총 매수금액</p>
                     <p class="totalBuyAmount">
                         <span class="value"></span>
                         <span class="unit">KRW</span>
                     </p>
                 </li>
-                <li>
+                <li class="asset-item">
                     <p>총 평가손익</p>
                     <p class="totalGainsLosses">
                         <span class="value"></span>
                         <span class="unit">KRW</span>
                     </p>
                 </li>
-                <li>
+                <li class="asset-item">
                     <p>총 평가금액</p>
                     <p class="totalAppraisalPrice">
                         <span class="value"></span>
                         <span class="unit">KRW</span>
                     </p>
                 </li>
-                <li>
+                <li class="asset-item">
                     <p>총 평가수익률</p>
                     <p class="totalReturnRate">
                         <span class="value"></span>
@@ -69,13 +69,13 @@
                 </li>
             </ul>
 
-            <ul class="accountsList"></ul>
+            <ul class="accounts-list"></ul>
         </div>
 
         <!-- <div id="backdrop" class="backdrop" hidden></div> -->
 
         <template id="accountsItem">
-            <li class="accountItem">
+            <li class="account-item">
                 <h3></h3>
                 <div class="item-row">
                     <p>평가손익 :</p>
