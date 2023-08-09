@@ -19,7 +19,7 @@ class OrderAsk {
         this.market = market;
         this.askButton = askButton;
         this.parentElement = parentElement;
-        this.template = document.querySelector("#askOrder");
+        this.template = document.querySelector("#sellOrder");
         this.tradePrice = tradePrice;
         this.avgBuyPrice = avg_buy_price;
         this.data = null;
@@ -74,11 +74,14 @@ class OrderAsk {
 
         const askPrice = this.avgBuyPrice + this.avgBuyPrice * 0.1;
 
-        element.querySelector(".balance .value")!.textContent =
+        element.querySelector(".orderAvailable .value")!.textContent =
             balance.toString();
-        element.querySelector(".balance .unit")!.textContent = unit_currency;
-        (element.querySelector(".askPrice input") as HTMLInputElement).value =
+        element.querySelector(".orderAvailable .unit")!.textContent =
+            unit_currency;
+        (element.querySelector(".sellPrice input") as HTMLInputElement).value =
             askPrice.toString();
+        // orderQuantity
+        // totalOrderAmount
     }
 
     private removeOrder(element: HTMLElement) {

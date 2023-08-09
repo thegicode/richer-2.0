@@ -95,7 +95,7 @@ export default class AccountItem {
             (this.totalGainsLosses / this.totalBuyAmount) * 100; // 총 평가수익률
 
         const values = {
-            ".asset-amount .value": Math.round(amount).toLocaleString(),
+            ".amount .value": Math.round(amount).toLocaleString(),
             ".totalAmount .value": Math.round(totalAmount).toLocaleString(),
             ".totalBuyAmount .value": Math.round(
                 this.totalBuyAmount

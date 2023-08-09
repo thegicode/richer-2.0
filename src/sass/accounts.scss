@@ -8,6 +8,11 @@ button {
     cursor: pointer;
 }
 
+ul {
+    list-style: none;
+    padding: 0;
+}
+
 .investment {
     &-title {
         margin: 1rem;
@@ -15,33 +20,31 @@ button {
     }
 }
 
-h2 {
-    margin: 10px 0;
-    font-size: 1.3rem;
-}
-
-ul {
-    list-style: none;
-    padding: 0;
-}
-
-.assets-overview {
+.assets {
     margin-bottom: 2rem;
     padding: 1rem;
     border-top: 1px solid #ddd;
-    border-bottom: 1px solid #ddd;
+    // border-bottom: 1px solid #ddd;
 
     // border-radius: 10px;
+
+    &-title {
+        margin: 10px 0;
+        font-size: 1.3rem;
+    }
+    &-list {
+        margin: 0;
+    }
 }
 
 .asset-item {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    // border-top: 1px dashed #ddd;
-    padding: 8px 0;
+    border-bottom: 1px dashed #ddd;
+    // padding: 8px 0;
 
-    p {
+    .label {
         margin: 0;
     }
 
@@ -51,14 +54,43 @@ ul {
     }
 }
 
-.accounts-list {
-    margin: 0 1rem;
+.accounts {
+    &-list {
+        margin: 0 1rem;
+    }
+}
 
-    .actions {
+.account {
+    overflow: hidden;
+    padding: 0 1rem;
+    margin-bottom: 1rem;
+    border: 1px solid #dae9f6;
+    border-radius: 10px;
+    background: aliceblue;
+
+    &-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .value {
+            font-weight: bold;
+            color: #c948c9;
+        }
+
+        .unit,
+        .percent {
+            margin-left: 0.5rem;
+            font-size: 12px;
+            color: #666;
+        }
+    }
+
+    &-actions {
         display: flex;
         justify-content: space-between;
         gap: 10px;
-        padding: 1rem 0;
+        padding-bottom: 1rem;
         button {
             width: 100%;
             border-radius: 10px;
@@ -81,35 +113,7 @@ ul {
     }
 }
 
-.account-item {
-    overflow: hidden;
-    padding: 0 1rem;
-    margin-bottom: 1rem;
-    border: 1px solid #dae9f6;
-    border-radius: 10px;
-    background: aliceblue;
-
-    .item-row {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        border-top: 1px dashed #dae9f6;
-    }
-
-    p .value {
-        font-weight: bold;
-        color: #c948c9;
-    }
-}
-
-.unit,
-.percent {
-    margin-left: 0.5rem;
-    font-size: 12px;
-    color: #666;
-}
-
-.askOrder {
+.sellOrder {
     display: flex;
     flex-direction: column;
 
@@ -127,7 +131,7 @@ ul {
 
     background: #fefff4;
 
-    h4 {
+    .title {
         margin: 1rem 0;
         color: #666;
     }
@@ -171,18 +175,25 @@ ul {
         }
     }
 
-    .balance {
+    .orderAvailable {
         align-items: center;
         color: #715c4c;
     }
 
-    .askPrice {
+    .sellPrice {
         button {
             padding: 0 14px;
             font-size: 1.5rem;
         }
     }
-    .askOrder-actions {
+
+    // .orderQuantity {
+    // }
+
+    // .totalOrderAmount {
+    // }
+
+    &-actions {
         display: flex;
         justify-content: space-between;
         gap: 10px;

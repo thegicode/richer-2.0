@@ -8,35 +8,36 @@ button {
   cursor: pointer;
 }
 
-.investment-title {
-  margin: 1rem;
-  font-size: 1.5rem;
-}
-
-h2 {
-  margin: 10px 0;
-  font-size: 1.3rem;
-}
-
 ul {
   list-style: none;
   padding: 0;
 }
 
-.assets-overview {
+.investment-title {
+  margin: 1rem;
+  font-size: 1.5rem;
+}
+
+.assets {
   margin-bottom: 2rem;
   padding: 1rem;
   border-top: 1px solid #ddd;
-  border-bottom: 1px solid #ddd;
+}
+.assets-title {
+  margin: 10px 0;
+  font-size: 1.3rem;
+}
+.assets-list {
+  margin: 0;
 }
 
 .asset-item {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 8px 0;
+  border-bottom: 1px dashed #ddd;
 }
-.asset-item p {
+.asset-item .label {
   margin: 0;
 }
 .asset-item .value {
@@ -47,13 +48,37 @@ ul {
 .accounts-list {
   margin: 0 1rem;
 }
-.accounts-list .actions {
+
+.account {
+  overflow: hidden;
+  padding: 0 1rem;
+  margin-bottom: 1rem;
+  border: 1px solid #dae9f6;
+  border-radius: 10px;
+  background: aliceblue;
+}
+.account-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.account-item .value {
+  font-weight: bold;
+  color: #c948c9;
+}
+.account-item .unit,
+.account-item .percent {
+  margin-left: 0.5rem;
+  font-size: 12px;
+  color: #666;
+}
+.account-actions {
   display: flex;
   justify-content: space-between;
   gap: 10px;
-  padding: 1rem 0;
+  padding-bottom: 1rem;
 }
-.accounts-list .actions button {
+.account-actions button {
   width: 100%;
   border-radius: 10px;
   border: none;
@@ -64,42 +89,16 @@ ul {
   font-weight: bold;
   cursor: pointer;
 }
-.accounts-list .actions button:hover {
+.account-actions button:hover {
   border-color: #7eacd4;
   color: #2a4162;
 }
-.accounts-list .actions button:disabled {
+.account-actions button:disabled {
   pointer-events: none;
   opacity: 0.5;
 }
 
-.account-item {
-  overflow: hidden;
-  padding: 0 1rem;
-  margin-bottom: 1rem;
-  border: 1px solid #dae9f6;
-  border-radius: 10px;
-  background: aliceblue;
-}
-.account-item .item-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-top: 1px dashed #dae9f6;
-}
-.account-item p .value {
-  font-weight: bold;
-  color: #c948c9;
-}
-
-.unit,
-.percent {
-  margin-left: 0.5rem;
-  font-size: 12px;
-  color: #666;
-}
-
-.askOrder {
+.sellOrder {
   display: flex;
   flex-direction: column;
   position: relative;
@@ -108,35 +107,35 @@ ul {
   border-top: 1px solid #c7dcee;
   background: #fefff4;
 }
-.askOrder h4 {
+.sellOrder .title {
   margin: 1rem 0;
   color: #666;
 }
-.askOrder dl {
+.sellOrder dl {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   font-size: 14px;
   color: #666;
 }
-.askOrder dt,
-.askOrder dd {
+.sellOrder dt,
+.sellOrder dd {
   margin: 10px 0;
 }
-.askOrder dt {
+.sellOrder dt {
   width: 30%;
 }
-.askOrder dt small {
+.sellOrder dt small {
   margin-left: 5px;
 }
-.askOrder dd {
+.sellOrder dd {
   display: flex;
   justify-content: flex-end;
   box-sizing: border-box;
   width: 70%;
   padding-left: 10px;
 }
-.askOrder input {
+.sellOrder input {
   box-sizing: border-box;
   border-radius: 5px;
   width: 100%;
@@ -145,29 +144,29 @@ ul {
   text-align: right;
   color: #715c4c;
 }
-.askOrder input:focus-visible {
+.sellOrder input:focus-visible {
   outline: #ad9b8d auto 1px;
 }
-.askOrder .balance {
+.sellOrder .orderAvailable {
   align-items: center;
   color: #715c4c;
 }
-.askOrder .askPrice button {
+.sellOrder .sellPrice button {
   padding: 0 14px;
   font-size: 1.5rem;
 }
-.askOrder .askOrder-actions {
+.sellOrder-actions {
   display: flex;
   justify-content: space-between;
   gap: 10px;
 }
-.askOrder .askOrder-actions button[type=reset] {
+.sellOrder-actions button[type=reset] {
   width: 30%;
 }
-.askOrder .askOrder-actions button[type=submit] {
+.sellOrder-actions button[type=submit] {
   flex: 1;
 }
-.askOrder button {
+.sellOrder button {
   border-radius: 5px;
   border: none;
   padding: 8px 0;
@@ -177,18 +176,18 @@ ul {
   font-weight: normal;
   cursor: pointer;
 }
-.askOrder button:hover {
+.sellOrder button:hover {
   border-color: #e2d8d0;
   color: #8f8074;
 }
-.askOrder button:disabled {
+.sellOrder button:disabled {
   pointer-events: none;
   opacity: 0.5;
 }
-.askOrder button:focus-visible {
+.sellOrder button:focus-visible {
   outline: #ad9b8d auto 1px;
 }
-.askOrder .closeButton {
+.sellOrder .closeButton {
   position: absolute;
   top: 1rem;
   right: 1rem;

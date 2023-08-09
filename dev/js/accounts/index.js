@@ -70,7 +70,7 @@
           this.market = market;
           this.askButton = askButton;
           this.parentElement = parentElement;
-          this.template = document.querySelector("#askOrder");
+          this.template = document.querySelector("#sellOrder");
           this.tradePrice = tradePrice;
           this.avgBuyPrice = avg_buy_price;
           this.data = null;
@@ -106,9 +106,9 @@
             const { ask_account } = data;
             const { balance, unit_currency } = ask_account;
             const askPrice = this.avgBuyPrice + this.avgBuyPrice * 0.1;
-            element.querySelector(".balance .value").textContent = balance.toString();
-            element.querySelector(".balance .unit").textContent = unit_currency;
-            element.querySelector(".askPrice input").value = askPrice.toString();
+            element.querySelector(".orderAvailable .value").textContent = balance.toString();
+            element.querySelector(".orderAvailable .unit").textContent = unit_currency;
+            element.querySelector(".sellPrice input").value = askPrice.toString();
           });
         }
         removeOrder(element) {
@@ -182,7 +182,7 @@
           const totalAppraisalPrice = this.totalBuyAmount + this.totalGainsLosses;
           const totalReturnRate = this.totalGainsLosses / this.totalBuyAmount * 100;
           const values = {
-            ".asset-amount .value": Math.round(amount).toLocaleString(),
+            ".amount .value": Math.round(amount).toLocaleString(),
             ".totalAmount .value": Math.round(totalAmount).toLocaleString(),
             ".totalBuyAmount .value": Math.round(this.totalBuyAmount).toLocaleString(),
             ".totalGainsLosses .value": Math.round(this.totalGainsLosses).toLocaleString(),

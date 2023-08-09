@@ -23,140 +23,144 @@
         <div class="investment">
             <h1 class="investment-title">투자내역</h1>
 
-            <ul class="assets-overview">
-                <h2>보유자산</h2>
-                <li class="asset-item">
-                    <p>보유 KRW</p>
-                    <p class="asset-amount">
-                        <span class="value"></span>
-                        <span class="unit">KRW</span>
-                    </p>
-                </li>
-                <li class="asset-item">
-                    <p>총 보유자산</p>
-                    <p class="totalAmount">
-                        <span class="value"></span>
-                        <span class="unit">KRW</span>
-                    </p>
-                </li>
-                <li class="asset-item">
-                    <p>총 매수금액</p>
-                    <p class="totalBuyAmount">
-                        <span class="value"></span>
-                        <span class="unit">KRW</span>
-                    </p>
-                </li>
-                <li class="asset-item">
-                    <p>총 평가손익</p>
-                    <p class="totalGainsLosses">
-                        <span class="value"></span>
-                        <span class="unit">KRW</span>
-                    </p>
-                </li>
-                <li class="asset-item">
-                    <p>총 평가금액</p>
-                    <p class="totalAppraisalPrice">
-                        <span class="value"></span>
-                        <span class="unit">KRW</span>
-                    </p>
-                </li>
-                <li class="asset-item">
-                    <p>총 평가수익률</p>
-                    <p class="totalReturnRate">
-                        <span class="value"></span>
-                        <span class="percent">%</span>
-                    </p>
-                </li>
-            </ul>
+            <section class="assets">
+                <h2 class="assets-title">보유자산</h2>
+                <ul class="assets-list">
+                    <li class="asset-item">
+                        <p class="label">보유 KRW</p>
+                        <p class="amount">
+                            <span class="value"></span>
+                            <span class="unit">KRW</span>
+                        </p>
+                    </li>
+                    <li class="asset-item">
+                        <p class="label">총 보유자산</p>
+                        <p class="totalAmount">
+                            <span class="value"></span>
+                            <span class="unit">KRW</span>
+                        </p>
+                    </li>
+                    <li class="asset-item">
+                        <p class="label">총 매수금액</p>
+                        <p class="totalBuyAmount">
+                            <span class="value"></span>
+                            <span class="unit">KRW</span>
+                        </p>
+                    </li>
+                    <li class="asset-item">
+                        <p class="label">총 평가손익</p>
+                        <p class="totalGainsLosses">
+                            <span class="value"></span>
+                            <span class="unit">KRW</span>
+                        </p>
+                    </li>
+                    <li class="asset-item">
+                        <p class="label">총 평가금액</p>
+                        <p class="totalAppraisalPrice">
+                            <span class="value"></span>
+                            <span class="unit">KRW</span>
+                        </p>
+                    </li>
+                    <li class="asset-item">
+                        <p class="label">총 평가수익률</p>
+                        <p class="totalReturnRate">
+                            <span class="value"></span>
+                            <span class="percent">%</span>
+                        </p>
+                    </li>
+                </ul>
+            </section>
 
-            <ul class="accounts-list"></ul>
+            <section class="accounts">
+                <ul class="accounts-list"></ul>
+            </section>
         </div>
 
         <!-- <div id="backdrop" class="backdrop" hidden></div> -->
 
         <template id="accountsItem">
-            <li class="account-item">
+            <li class="account">
                 <h3></h3>
-                <div class="item-row">
-                    <p>평가손익 :</p>
-                    <p class="gainsLosses">
+                <dl class="account-item">
+                    <dt>평가손익 :</dt>
+                    <dd class="gainsLosses">
                         <span class="value"></span>
                         <span class="unit"></span>
-                    </p>
-                </div>
-                <div class="item-row">
-                    <p>수익률 :</p>
-                    <p class="returnRate">
+                    </dd>
+                </dl>
+                <dl class="account-item">
+                    <dt>수익률 :</dt>
+                    <dd class="returnRate">
                         <span class="value"></span>
                         <span class="percent">%</span>
-                    </p>
-                </div>
-                <div class="item-row">
-                    <p>보유수량 :</p>
-                    <p class="volume">
+                    </dd>
+                </dl>
+                <dl class="account-item">
+                    <dt>보유수량 :</dt>
+                    <dd class="volume">
                         <span class="value"></span>
-                    </p>
-                </div>
-                <div class="item-row">
-                    <p>매수평균가 :</p>
-                    <p class="avgBuyPrice">
-                        <span class="value"></span>
-                        <span class="unit"></span>
-                    </p>
-                </div>
-                <div class="item-row">
-                    <p>평가금액 :</p>
-                    <p class="appraisalPrice">
+                    </dd>
+                </dl>
+                <dl class="account-item">
+                    <dt>매수평균가 :</dt>
+                    <dd class="avgBuyPrice">
                         <span class="value"></span>
                         <span class="unit"></span>
-                    </p>
-                </div>
-                <div class="item-row">
-                    <p>매수금액 :</p>
-                    <p class="buyPrice">
+                    </dd>
+                </dl>
+                <dl class="account-item">
+                    <dt>평가금액 :</dt>
+                    <dd class="appraisalPrice">
                         <span class="value"></span>
                         <span class="unit"></span>
-                    </p>
-                </div>
-                <div class="actions">
+                    </dd>
+                </dl>
+                <dl class="account-item">
+                    <dt>매수금액 :</dt>
+                    <dd class="buyPrice">
+                        <span class="value"></span>
+                        <span class="unit"></span>
+                    </dd>
+                </dl>
+                <div class="account-actions">
                     <button type="button" class="bidButton">매수</button>
                     <button type="button" class="askButton">매도</button>
                 </div>
             </li>
         </template>
 
-        <template id="askOrder">
-            <div class="askOrder">
-                <h4>매도</h4>
+        <template id="sellOrder">
+            <section class="sellOrder">
+                <h4 class="title">매도</h4>
                 <form>
-                    <dl>
+                    <dl class="sellOrder-list">
                         <dt>주문가능</dt>
-                        <dd class="balance">
+                        <dd class="orderAvailable">
                             <span class="value"></span>
                             <small class="unit"></small>
                         </dd>
                         <dt>매도가격<small>(KRW)</small></dt>
-                        <dd class="askPrice">
+                        <dd class="sellPrice">
                             <input type="number" name="price" />
                             <button type="button" name="plus">+</button>
                             <button type="button" name="minus">-</button>
                         </dd>
                         <dt>주문수량<small>(KRW)</small></dt>
-                        <dd>
+                        <dd class="orderQuantity">
                             <input type="number" name="amount" />
                         </dd>
                         <dt>주문총액<small>(KRW)</small></dt>
-                        <dd>
+                        <dd class="totalOrderAmount">
                             <input type="number" name="totalPrice" />
                         </dd>
                     </dl>
-                    <div class="askOrder-actions">
+                    <div class="sellOrder-actions">
                         <button type="reset">초기화</button>
                         <button type="submit">매도</button>
+                        <button type="button" class="closeButton">닫기</button>
                     </div>
-                    <button type="button" class="closeButton">닫기</button>
                 </form>
-            </div>
+            </section>
         </template>
     </body>
 </html>
