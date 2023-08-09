@@ -8,7 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import fetchData from "@src/scripts/utils/fetchData";
-class OrderAsk {
+class SellOrder {
     constructor(market, askButton, parentElement, tradePrice, avg_buy_price) {
         this.market = market;
         this.askButton = askButton;
@@ -53,6 +53,9 @@ class OrderAsk {
                 balance.toString();
             element.querySelector(".sellPrice input").value =
                 askPrice.toString();
+            element.querySelectorAll("dl .unit").forEach((el) => {
+                el.textContent = unit_currency;
+            });
             element.querySelectorAll(".market-unit").forEach((el) => {
                 el.textContent = currency;
             });
@@ -66,5 +69,5 @@ class OrderAsk {
         });
     }
 }
-export { OrderAsk };
-//# sourceMappingURL=OrderAsk.js.map
+export { SellOrder };
+//# sourceMappingURL=SellOrder.js.map

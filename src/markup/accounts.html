@@ -30,42 +30,42 @@
                         <p class="label">보유 KRW</p>
                         <p class="amount">
                             <span class="value"></span>
-                            <span class="unit">KRW</span>
+                            <small class="unit">KRW</small>
                         </p>
                     </li>
                     <li class="asset-item">
                         <p class="label">총 보유자산</p>
                         <p class="totalAmount">
                             <span class="value"></span>
-                            <span class="unit">KRW</span>
+                            <small class="unit">KRW</small>
                         </p>
                     </li>
                     <li class="asset-item">
                         <p class="label">총 매수금액</p>
                         <p class="totalBuyAmount">
                             <span class="value"></span>
-                            <span class="unit">KRW</span>
+                            <small class="unit">KRW</small>
                         </p>
                     </li>
                     <li class="asset-item">
                         <p class="label">총 평가손익</p>
                         <p class="totalGainsLosses">
                             <span class="value"></span>
-                            <span class="unit">KRW</span>
+                            <small class="unit">KRW</small>
                         </p>
                     </li>
                     <li class="asset-item">
                         <p class="label">총 평가금액</p>
                         <p class="totalAppraisalPrice">
                             <span class="value"></span>
-                            <span class="unit">KRW</span>
+                            <small class="unit">KRW</small>
                         </p>
                     </li>
                     <li class="asset-item">
                         <p class="label">총 평가수익률</p>
                         <p class="totalReturnRate">
                             <span class="value"></span>
-                            <span class="percent">%</span>
+                            <small class="percent">%</small>
                         </p>
                     </li>
                 </ul>
@@ -99,6 +99,7 @@
                     <dt>보유수량 :</dt>
                     <dd class="volume">
                         <span class="value"></span>
+                        <span class="market-unit"></span>
                     </dd>
                 </dl>
                 <dl class="account-item">
@@ -137,19 +138,22 @@
                         <dt>주문가능</dt>
                         <dd class="orderAvailable">
                             <span class="value"></span>
-                            <small class="unit"></small>
+                            <small class="market-unit"></small>
                         </dd>
-                        <dt>매도가격<small>(KRW)</small></dt>
+                        <dt>
+                            매도가격
+                            <small class="unit"></small>
+                        </dt>
                         <dd class="sellPrice">
                             <input type="number" name="price" />
                             <button type="button" name="plus">+</button>
                             <button type="button" name="minus">-</button>
                         </dd>
-                        <dt>주문수량<small>(KRW)</small></dt>
+                        <dt>주문수량<small class="market-unit"></small></dt>
                         <dd class="orderQuantity">
                             <input type="number" name="amount" />
                         </dd>
-                        <dt>주문총액<small>(KRW)</small></dt>
+                        <dt>주문총액<small class="unit"></small></dt>
                         <dd class="totalOrderAmount">
                             <input type="number" name="totalPrice" />
                         </dd>

@@ -21,12 +21,9 @@ ul {
 }
 
 .assets {
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
     padding: 1rem;
     border-top: 1px solid #ddd;
-    // border-bottom: 1px solid #ddd;
-
-    // border-radius: 10px;
 
     &-title {
         margin: 10px 0;
@@ -42,15 +39,22 @@ ul {
     align-items: center;
     justify-content: space-between;
     border-bottom: 1px dashed #ddd;
-    // padding: 8px 0;
+    padding: 0 8px;
 
     .label {
-        margin: 0;
+        color: #333;
     }
 
     .value {
         font-weight: bold;
         color: #c948c9;
+    }
+
+    .unit,
+    .percent {
+        margin-left: 8px;
+        font-size: 14px;
+        color: #999;
     }
 }
 
@@ -73,12 +77,18 @@ ul {
         align-items: center;
         justify-content: space-between;
 
+        dt {
+            font-size: 14px;
+            color: #333;
+        }
+
         .value {
             font-weight: bold;
             color: #c948c9;
         }
 
         .unit,
+        .market-unit,
         .percent {
             margin-left: 0.5rem;
             font-size: 12px;
@@ -151,9 +161,6 @@ ul {
 
     dt {
         width: 30%;
-        small {
-            margin-left: 5px;
-        }
     }
     dd {
         display: flex;
@@ -175,9 +182,19 @@ ul {
         }
     }
 
+    .unit,
+    .market-unit {
+        margin-left: 8px;
+        font-size: 12px;
+        color: #999;
+    }
+
     .orderAvailable {
         align-items: center;
         color: #715c4c;
+        .value {
+            font-weight: bold;
+        }
     }
 
     .sellPrice {

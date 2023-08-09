@@ -1,6 +1,6 @@
 import fetchData from "@src/scripts/utils/fetchData";
 
-class OrderAsk {
+class SellOrder {
     private market: string;
     private askButton: HTMLButtonElement;
     private parentElement: HTMLElement;
@@ -64,7 +64,7 @@ class OrderAsk {
             ask_account,
         } = data;
         const {
-            // currency,
+            currency,
             balance,
             // locked,
             // avg_buy_price,
@@ -76,12 +76,19 @@ class OrderAsk {
 
         element.querySelector(".orderAvailable .value")!.textContent =
             balance.toString();
-        element.querySelector(".orderAvailable .unit")!.textContent =
-            unit_currency;
+        // element.querySelector(".orderAvailable .unit")!.textContent =
+        //     unit_currency;
         (element.querySelector(".sellPrice input") as HTMLInputElement).value =
             askPrice.toString();
         // orderQuantity
         // totalOrderAmount
+
+        element.querySelectorAll("dl .unit").forEach((el) => {
+            el.textContent = unit_currency;
+        });
+        element.querySelectorAll(".market-unit").forEach((el) => {
+            el.textContent = currency;
+        });
     }
 
     private removeOrder(element: HTMLElement) {
@@ -93,4 +100,4 @@ class OrderAsk {
     }
 }
 
-export { OrderAsk };
+export { SellOrder };

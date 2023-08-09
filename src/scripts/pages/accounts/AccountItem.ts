@@ -1,4 +1,4 @@
-import { OrderAsk } from "./OrderAsk";
+import { SellOrder } from "./SellOrder";
 
 export default class AccountItem {
     private template: HTMLTemplateElement | null;
@@ -63,6 +63,9 @@ export default class AccountItem {
         element.querySelectorAll(".unit").forEach((el) => {
             el.textContent = unit_currency;
         });
+        element.querySelectorAll(".market-unit").forEach((el) => {
+            el.textContent = currency;
+        });
 
         this.handleOrder(element, trade_price, avg_buy_price);
 
@@ -77,7 +80,7 @@ export default class AccountItem {
         const askButton = element.querySelector(
             ".askButton"
         ) as HTMLButtonElement;
-        new OrderAsk(
+        new SellOrder(
             this.market,
             askButton,
             element,

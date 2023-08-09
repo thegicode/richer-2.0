@@ -32,10 +32,10 @@
     }
   });
 
-  // dev/scripts/pages/accounts/OrderAsk.js
-  var __awaiter, OrderAsk;
-  var init_OrderAsk = __esm({
-    "dev/scripts/pages/accounts/OrderAsk.js"() {
+  // dev/scripts/pages/accounts/SellOrder.js
+  var __awaiter, SellOrder;
+  var init_SellOrder = __esm({
+    "dev/scripts/pages/accounts/SellOrder.js"() {
       "use strict";
       init_fetchData();
       __awaiter = function(thisArg, _arguments, P, generator) {
@@ -65,7 +65,7 @@
           step((generator = generator.apply(thisArg, _arguments || [])).next());
         });
       };
-      OrderAsk = class {
+      SellOrder = class {
         constructor(market, askButton, parentElement, tradePrice, avg_buy_price) {
           this.market = market;
           this.askButton = askButton;
@@ -104,11 +104,16 @@
             this.askButton.disabled = true;
             const data = this.data;
             const { ask_account } = data;
-            const { balance, unit_currency } = ask_account;
+            const { currency, balance, unit_currency } = ask_account;
             const askPrice = this.avgBuyPrice + this.avgBuyPrice * 0.1;
             element.querySelector(".orderAvailable .value").textContent = balance.toString();
-            element.querySelector(".orderAvailable .unit").textContent = unit_currency;
             element.querySelector(".sellPrice input").value = askPrice.toString();
+            element.querySelectorAll("dl .unit").forEach((el) => {
+              el.textContent = unit_currency;
+            });
+            element.querySelectorAll(".market-unit").forEach((el) => {
+              el.textContent = currency;
+            });
           });
         }
         removeOrder(element) {
@@ -127,7 +132,7 @@
   var init_AccountItem = __esm({
     "dev/scripts/pages/accounts/AccountItem.js"() {
       "use strict";
-      init_OrderAsk();
+      init_SellOrder();
       AccountItem = class {
         constructor() {
           this.market = "";
@@ -168,12 +173,15 @@
           element.querySelectorAll(".unit").forEach((el) => {
             el.textContent = unit_currency;
           });
+          element.querySelectorAll(".market-unit").forEach((el) => {
+            el.textContent = currency;
+          });
           this.handleOrder(element, trade_price, avg_buy_price);
           return element;
         }
         handleOrder(element, trade_price, avg_buy_price) {
           const askButton = element.querySelector(".askButton");
-          new OrderAsk(this.market, askButton, element, trade_price, avg_buy_price);
+          new SellOrder(this.market, askButton, element, trade_price, avg_buy_price);
         }
         overviewAssets(asset) {
           const { balance, locked } = asset;

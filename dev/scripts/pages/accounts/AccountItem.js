@@ -1,4 +1,4 @@
-import { OrderAsk } from "./OrderAsk";
+import { SellOrder } from "./SellOrder";
 export default class AccountItem {
     constructor() {
         this.market = "";
@@ -39,12 +39,15 @@ export default class AccountItem {
         element.querySelectorAll(".unit").forEach((el) => {
             el.textContent = unit_currency;
         });
+        element.querySelectorAll(".market-unit").forEach((el) => {
+            el.textContent = currency;
+        });
         this.handleOrder(element, trade_price, avg_buy_price);
         return element;
     }
     handleOrder(element, trade_price, avg_buy_price) {
         const askButton = element.querySelector(".askButton");
-        new OrderAsk(this.market, askButton, element, trade_price, avg_buy_price);
+        new SellOrder(this.market, askButton, element, trade_price, avg_buy_price);
     }
     overviewAssets(asset) {
         const { balance, locked } = asset;

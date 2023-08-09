@@ -19,7 +19,7 @@ ul {
 }
 
 .assets {
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
   padding: 1rem;
   border-top: 1px solid #ddd;
 }
@@ -36,13 +36,20 @@ ul {
   align-items: center;
   justify-content: space-between;
   border-bottom: 1px dashed #ddd;
+  padding: 0 8px;
 }
 .asset-item .label {
-  margin: 0;
+  color: #333;
 }
 .asset-item .value {
   font-weight: bold;
   color: #c948c9;
+}
+.asset-item .unit,
+.asset-item .percent {
+  margin-left: 8px;
+  font-size: 14px;
+  color: #999;
 }
 
 .accounts-list {
@@ -62,11 +69,16 @@ ul {
   align-items: center;
   justify-content: space-between;
 }
+.account-item dt {
+  font-size: 14px;
+  color: #333;
+}
 .account-item .value {
   font-weight: bold;
   color: #c948c9;
 }
 .account-item .unit,
+.account-item .market-unit,
 .account-item .percent {
   margin-left: 0.5rem;
   font-size: 12px;
@@ -125,9 +137,6 @@ ul {
 .sellOrder dt {
   width: 30%;
 }
-.sellOrder dt small {
-  margin-left: 5px;
-}
 .sellOrder dd {
   display: flex;
   justify-content: flex-end;
@@ -147,9 +156,18 @@ ul {
 .sellOrder input:focus-visible {
   outline: #ad9b8d auto 1px;
 }
+.sellOrder .unit,
+.sellOrder .market-unit {
+  margin-left: 8px;
+  font-size: 12px;
+  color: #999;
+}
 .sellOrder .orderAvailable {
   align-items: center;
   color: #715c4c;
+}
+.sellOrder .orderAvailable .value {
+  font-weight: bold;
 }
 .sellOrder .sellPrice button {
   padding: 0 14px;
