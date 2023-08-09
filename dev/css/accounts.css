@@ -186,6 +186,16 @@ ul {
 .sellOrder .sellPrice-options label {
   display: flex;
 }
+.sellOrder .sellPrice-options-input label {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+.sellOrder .sellPrice-options-input input {
+  width: 70px;
+}
 .sellOrder-memo dl {
   display: flex;
   justify-content: space-between;

@@ -42,6 +42,7 @@ export default class AccountItem {
         element.querySelectorAll(".market-unit").forEach((el) => {
             el.textContent = currency;
         });
+        element.dataset.increase = gainsLosses > 0 ? "true" : "false";
         this.handleOrder(element, trade_price, avg_buy_price);
         return element;
     }

@@ -216,6 +216,18 @@ ul {
             // align-items: center;
         }
     }
+    .sellPrice-options-input {
+        label {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        input {
+            width: 70px;
+        }
+    }
 
     // .orderQuantity {
     // }

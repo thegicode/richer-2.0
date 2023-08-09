@@ -67,6 +67,14 @@ export default class AccountItem {
             el.textContent = currency;
         });
 
+        // if (gainsLosses > 0) {
+        //     element.dataset.increase = "true";
+        // } else {
+        //     element.dataset.increase = "false";
+        // }
+
+        element.dataset.increase = gainsLosses > 0 ? "true" : "false";
+
         this.handleOrder(element, trade_price, avg_buy_price);
 
         return element;

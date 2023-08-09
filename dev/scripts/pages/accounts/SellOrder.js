@@ -70,7 +70,8 @@ class SellOrder {
         const sellPriceInput = element.querySelector(".sellPrice input");
         const orderQuantityInput = element.querySelector(".orderQuantity input");
         const totalOrderAmountInput = element.querySelector(".totalOrderAmount input");
-        const sellPriceRadios = element.querySelectorAll("input[name='sellPrice-percent']");
+        const sellPriceRadios = element.querySelectorAll("input[name='sellPrice-rate']");
+        const sellPriceOptioonInput = element.querySelector("input[name='sellPrcie-rate-input']");
         const submitButton = element.querySelector("button[type='submit']");
         const validate = () => {
             if (sellPriceInput.value &&
@@ -87,9 +88,31 @@ class SellOrder {
             }
             validate();
         };
+        const sellPriceByRate = (rate) => {
+            const price = this.tradePrice + this.tradePrice * rate;
+            sellPriceInput.value = price.toString();
+            fromSellPriceToTotalOrderAmount();
+        };
         sellPriceInput.value = this.tradePrice.toString();
         sellPriceInput.addEventListener("input", () => {
             fromSellPriceToTotalOrderAmount();
+        });
+        sellPriceRadios.forEach((radio) => {
+            radio.addEventListener("change", () => {
+                sellPriceOptioonInput.value = "";
+                const { checked, value } = radio;
+                if (checked) {
+                    sellPriceByRate(Number(value));
+                }
+            });
+        });
+        sellPriceOptioonInput.addEventListener("input", () => {
+            const checkedInput = document.querySelector("input[name='sellPrice-rate']:checked");
+            if (checkedInput) {
+                checkedInput.checked = false;
+            }
+            const rate = Number(sellPriceOptioonInput.value) / 100;
+            sellPriceByRate(rate);
         });
         orderQuantityInput.addEventListener("input", () => {
             const quantity = Number(orderQuantityInput.value);
@@ -114,17 +137,6 @@ class SellOrder {
                 orderQuantityInput.value = "";
             }
             validate();
-        });
-        sellPriceRadios.forEach((radio) => {
-            radio.addEventListener("change", () => {
-                const { checked, value } = radio;
-                const rate = Number(value);
-                if (checked) {
-                    const price = this.tradePrice + this.tradePrice * rate;
-                    sellPriceInput.value = price.toString();
-                    fromSellPriceToTotalOrderAmount();
-                }
-            });
         });
         (_a = element.querySelector("form")) === null || _a === void 0 ? void 0 : _a.addEventListener("submit", (event) => {
             event.preventDefault();

@@ -99,7 +99,10 @@ class SellOrder {
             ".totalOrderAmount input"
         ) as HTMLInputElement;
         const sellPriceRadios: NodeListOf<HTMLInputElement> =
-            element.querySelectorAll("input[name='sellPrice-percent']");
+            element.querySelectorAll("input[name='sellPrice-rate']");
+        const sellPriceOptioonInput = element.querySelector(
+            "input[name='sellPrcie-rate-input']"
+        ) as HTMLInputElement;
 
         const submitButton = element.querySelector(
             "button[type='submit']"
@@ -128,10 +131,37 @@ class SellOrder {
             validate();
         };
 
+        const sellPriceByRate = (rate: number) => {
+            const price = this.tradePrice + this.tradePrice * rate;
+            sellPriceInput.value = price.toString();
+            fromSellPriceToTotalOrderAmount();
+        };
+
         sellPriceInput.value = this.tradePrice.toString();
 
         sellPriceInput.addEventListener("input", () => {
             fromSellPriceToTotalOrderAmount();
+        });
+
+        sellPriceRadios.forEach((radio) => {
+            radio.addEventListener("change", () => {
+                sellPriceOptioonInput.value = "";
+                const { checked, value } = radio;
+                if (checked) {
+                    sellPriceByRate(Number(value));
+                }
+            });
+        });
+
+        sellPriceOptioonInput.addEventListener("input", () => {
+            const checkedInput = document.querySelector(
+                "input[name='sellPrice-rate']:checked"
+            ) as HTMLInputElement;
+            if (checkedInput) {
+                checkedInput.checked = false;
+            }
+            const rate = Number(sellPriceOptioonInput.value) / 100;
+            sellPriceByRate(rate);
         });
 
         orderQuantityInput.addEventListener("input", () => {
@@ -157,19 +187,6 @@ class SellOrder {
                 orderQuantityInput.value = "";
             }
             validate();
-        });
-
-        sellPriceRadios.forEach((radio) => {
-            radio.addEventListener("change", () => {
-                const { checked, value } = radio;
-                const rate = Number(value);
-                if (checked) {
-                    const price = this.tradePrice + this.tradePrice * rate;
-                    sellPriceInput.value = price.toString();
-
-                    fromSellPriceToTotalOrderAmount();
-                }
-            });
         });
 
         element.querySelector("form")?.addEventListener("submit", (event) => {
