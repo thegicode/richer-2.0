@@ -133,6 +133,7 @@
         <template id="sellOrder">
             <section class="sellOrder">
                 <h4 class="title">매도</h4>
+
                 <form>
                     <dl class="sellOrder-list">
                         <dt>주문가능</dt>
@@ -140,27 +141,75 @@
                             <span class="value"></span>
                             <small class="market-unit"></small>
                         </dd>
-                        <dt>
-                            매도가격
-                            <small class="unit"></small>
-                        </dt>
+                        <dt>매도가격</dt>
                         <dd class="sellPrice">
-                            <input type="number" name="price" />
-                            <button type="button" name="plus">+</button>
-                            <button type="button" name="minus">-</button>
+                            <div class="sellPrice-inputs">
+                                <input type="number" min="0" />
+                                <small class="unit"></small>
+                            </div>
+                            <div class="sellPrice-options">
+                                <label>
+                                    <input
+                                        type="radio"
+                                        name="sellPrice-percent"
+                                        value="0.05"
+                                    />
+                                    <span>5%</span>
+                                </label>
+                                <label>
+                                    <input
+                                        type="radio"
+                                        name="sellPrice-percent"
+                                        value="0.1"
+                                    />
+                                    <span>10%</span>
+                                </label>
+                                <label>
+                                    <input
+                                        type="radio"
+                                        name="sellPrice-percent"
+                                        value="0.15"
+                                    />
+                                    <span>15%</span>
+                                </label>
+                                <label>
+                                    <input
+                                        type="radio"
+                                        name="sellPrice-percent"
+                                        value="0.2"
+                                    />
+                                    <span>20%</span>
+                                </label>
+                            </div>
                         </dd>
-                        <dt>주문수량<small class="market-unit"></small></dt>
+                        <dt>주문수량</dt>
                         <dd class="orderQuantity">
-                            <input type="number" name="amount" />
+                            <input type="number" min="0" />
+                            <small class="market-unit"></small>
                         </dd>
-                        <dt>주문총액<small class="unit"></small></dt>
+                        <dt>주문총액</dt>
                         <dd class="totalOrderAmount">
-                            <input type="number" name="totalPrice" />
+                            <input type="number" min="0" />
+                            <small class="unit"></small>
                         </dd>
                     </dl>
+                    <div class="sellOrder-memo">
+                        <dl>
+                            <dt>- 최소 주문 금액 :</dt>
+                            <dd class="minTotal">
+                                <span class="value"></span>
+                                <small class="unit"></small>
+                            </dd>
+                            <dt>- 수수료 :</dt>
+                            <dd class="fee">
+                                <span class="value"></span>
+                                <small class="percent">%</small>
+                            </dd>
+                        </dl>
+                    </div>
                     <div class="sellOrder-actions">
                         <button type="reset">초기화</button>
-                        <button type="submit">매도</button>
+                        <button type="submit" disabled>매도</button>
                         <button type="button" class="closeButton">닫기</button>
                     </div>
                 </form>

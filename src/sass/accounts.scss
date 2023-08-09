@@ -146,29 +146,33 @@ ul {
         color: #666;
     }
 
-    dl {
+    &-list {
         display: flex;
         flex-wrap: wrap;
         align-items: center;
         font-size: 14px;
         color: #666;
+        dt,
+        dd {
+            margin: 10px 0;
+        }
+
+        dt {
+            width: 30%;
+        }
+        dd {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            box-sizing: border-box;
+            width: 70%;
+            padding-left: 10px;
+        }
+        .sellPrice {
+            display: block;
+        }
     }
 
-    dt,
-    dd {
-        margin: 10px 0;
-    }
-
-    dt {
-        width: 30%;
-    }
-    dd {
-        display: flex;
-        justify-content: flex-end;
-        box-sizing: border-box;
-        width: 70%;
-        padding-left: 10px;
-    }
     input {
         box-sizing: border-box;
         border-radius: 5px;
@@ -197,10 +201,19 @@ ul {
         }
     }
 
-    .sellPrice {
-        button {
-            padding: 0 14px;
-            font-size: 1.5rem;
+    .sellPrice-inputs {
+        display: flex;
+        align-items: center;
+    }
+
+    .sellPrice-options {
+        display: flex;
+        justify-content: space-between;
+        gap: 2px;
+        margin-top: 15px;
+        label {
+            display: flex;
+            // align-items: center;
         }
     }
 
@@ -209,6 +222,19 @@ ul {
 
     // .totalOrderAmount {
     // }
+
+    &-memo {
+        dl {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            font-size: 12px;
+        }
+        dt,
+        dd {
+            margin: 0;
+        }
+    }
 
     &-actions {
         display: flex;
@@ -237,7 +263,7 @@ ul {
         }
         &:disabled {
             pointer-events: none;
-            opacity: 0.5;
+            opacity: 0.3;
         }
         &:focus-visible {
             outline: #ad9b8d auto 1px;
