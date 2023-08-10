@@ -10,10 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 function fetchData(url, params) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            let finalURL = url;
-            if (params) {
-                finalURL = `${url}?${params}`;
-            }
+            const finalURL = params ? `${url}?${params}` : url;
             const response = yield fetch(finalURL, { method: "GET" });
             return yield response.json();
         }

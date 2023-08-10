@@ -1,16 +1,6 @@
 async function fetchData(url: string, params?: string) {
     try {
-        let finalURL = url;
-
-        if (params) {
-            finalURL = `${url}?${params}`;
-        }
-
-        // const urlObject = new URL(url);
-        // if (marketName) {
-        //     urlObject.searchParams.append("market", marketName);
-        // }
-
+        const finalURL = params ? `${url}?${params}` : url;
         const response = await fetch(finalURL, { method: "GET" });
         return await response.json();
     } catch (error) {

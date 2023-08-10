@@ -11,10 +11,7 @@
   // src/scripts/utils/fetchData.ts
   async function fetchData(url, params) {
     try {
-      let finalURL = url;
-      if (params) {
-        finalURL = `${url}?${params}`;
-      }
+      const finalURL = params ? `${url}?${params}` : url;
       const response = await fetch(finalURL, { method: "GET" });
       return await response.json();
     } catch (error) {
