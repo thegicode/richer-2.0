@@ -28,8 +28,11 @@ class SellOrder {
     }
 
     private async iniitialize() {
-        const marketName = this.market;
-        const data = await fetchData("/getChance", marketName);
+        const params = new URLSearchParams({
+            market: this.market,
+        }).toString();
+
+        const data = await fetchData("/getChance", params);
         this.data = data;
 
         const { balance } = data.ask_account;
@@ -103,6 +106,9 @@ class SellOrder {
         const sellPriceOptioonInput = element.querySelector(
             "input[name='sellPrcie-rate-input']"
         ) as HTMLInputElement;
+        const cautionElement = element.querySelector(
+            ".sellOrder-caution"
+        ) as HTMLElement;
 
         const submitButton = element.querySelector(
             "button[type='submit']"
@@ -169,9 +175,12 @@ class SellOrder {
             if (quantity < balance) {
                 const result = quantity * Number(sellPriceInput.value);
                 totalOrderAmountInput.value = Math.round(result).toString();
+                cautionElement.textContent = "";
+                cautionElement.hidden = true;
             } else {
-                alert("주문 가능 수량 초과입니다. ");
-                orderQuantityInput.value = "";
+                cautionElement.textContent = "주문 가능 수량 초과입니다. ";
+                cautionElement.hidden = false;
+                // orderQuantityInput.value = "";
             }
             validate();
         });
@@ -182,16 +191,32 @@ class SellOrder {
                 Number(sellPriceInput.value);
             if (quantity < balance) {
                 orderQuantityInput.value = quantity.toString();
+                cautionElement.textContent = "";
+                cautionElement.hidden = true;
             } else {
-                alert("주문 가능 수량 초과입니다. ");
-                orderQuantityInput.value = "";
+                cautionElement.textContent = "주문 가능 수량 초과입니다.";
+                cautionElement.hidden = false;
+                // orderQuantityInput.value = "";
+                // totalOrderAmountInput.value = "";
             }
             validate();
         });
 
-        element.querySelector("form")?.addEventListener("submit", (event) => {
-            event.preventDefault();
-        });
+        element
+            .querySelector("form")
+            ?.addEventListener("submit", async (event) => {
+                event.preventDefault();
+                const params = new URLSearchParams({
+                    market: this.market,
+                    side: "ask",
+                    volume: orderQuantityInput.value,
+                    price: sellPriceInput.value,
+                    ord_type: "limit",
+                }).toString();
+
+                const reponse = await fetchData("/getOrders", params);
+                console.log(reponse);
+            });
 
         element.querySelector("form")?.addEventListener("reset", () => {
             submitButton.disabled = true;

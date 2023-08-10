@@ -21,8 +21,10 @@ class SellOrder {
     }
     iniitialize() {
         return __awaiter(this, void 0, void 0, function* () {
-            const marketName = this.market;
-            const data = yield fetchData("/getChance", marketName);
+            const params = new URLSearchParams({
+                market: this.market,
+            }).toString();
+            const data = yield fetchData("/getChance", params);
             this.data = data;
             const { balance } = data.ask_account;
             if (Number(balance) === 0) {
@@ -72,6 +74,7 @@ class SellOrder {
         const totalOrderAmountInput = element.querySelector(".totalOrderAmount input");
         const sellPriceRadios = element.querySelectorAll("input[name='sellPrice-rate']");
         const sellPriceOptioonInput = element.querySelector("input[name='sellPrcie-rate-input']");
+        const cautionElement = element.querySelector(".sellOrder-caution");
         const submitButton = element.querySelector("button[type='submit']");
         const validate = () => {
             if (sellPriceInput.value &&
@@ -119,10 +122,12 @@ class SellOrder {
             if (quantity < balance) {
                 const result = quantity * Number(sellPriceInput.value);
                 totalOrderAmountInput.value = Math.round(result).toString();
+                cautionElement.textContent = "";
+                cautionElement.hidden = true;
             }
             else {
-                alert("주문 가능 수량 초과입니다. ");
-                orderQuantityInput.value = "";
+                cautionElement.textContent = "주문 가능 수량 초과입니다. ";
+                cautionElement.hidden = false;
             }
             validate();
         });
@@ -131,16 +136,28 @@ class SellOrder {
                 Number(sellPriceInput.value);
             if (quantity < balance) {
                 orderQuantityInput.value = quantity.toString();
+                cautionElement.textContent = "";
+                cautionElement.hidden = true;
             }
             else {
-                alert("주문 가능 수량 초과입니다. ");
-                orderQuantityInput.value = "";
+                cautionElement.textContent = "주문 가능 수량 초과입니다.";
+                cautionElement.hidden = false;
             }
             validate();
         });
-        (_a = element.querySelector("form")) === null || _a === void 0 ? void 0 : _a.addEventListener("submit", (event) => {
+        (_a = element
+            .querySelector("form")) === null || _a === void 0 ? void 0 : _a.addEventListener("submit", (event) => __awaiter(this, void 0, void 0, function* () {
             event.preventDefault();
-        });
+            const params = new URLSearchParams({
+                market: this.market,
+                side: "ask",
+                volume: orderQuantityInput.value,
+                price: sellPriceInput.value,
+                ord_type: "limit",
+            }).toString();
+            const reponse = yield fetchData("/getOrders", params);
+            console.log(reponse);
+        }));
         (_b = element.querySelector("form")) === null || _b === void 0 ? void 0 : _b.addEventListener("reset", () => {
             submitButton.disabled = true;
         });

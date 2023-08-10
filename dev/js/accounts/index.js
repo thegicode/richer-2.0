@@ -9,13 +9,10 @@
   };
 
   // src/scripts/utils/fetchData.ts
-  async function fetchData(url, marketName) {
+  async function fetchData(url, params) {
     try {
       let finalURL = url;
-      if (marketName) {
-        const params = new URLSearchParams({
-          market: marketName
-        }).toString();
+      if (params) {
         finalURL = `${url}?${params}`;
       }
       const response = await fetch(finalURL, { method: "GET" });
@@ -78,8 +75,10 @@
         }
         iniitialize() {
           return __awaiter(this, void 0, void 0, function* () {
-            const marketName = this.market;
-            const data = yield fetchData_default("/getChance", marketName);
+            const params = new URLSearchParams({
+              market: this.market
+            }).toString();
+            const data = yield fetchData_default("/getChance", params);
             this.data = data;
             const { balance } = data.ask_account;
             if (Number(balance) === 0) {
@@ -126,6 +125,7 @@
           const totalOrderAmountInput = element.querySelector(".totalOrderAmount input");
           const sellPriceRadios = element.querySelectorAll("input[name='sellPrice-rate']");
           const sellPriceOptioonInput = element.querySelector("input[name='sellPrcie-rate-input']");
+          const cautionElement = element.querySelector(".sellOrder-caution");
           const submitButton = element.querySelector("button[type='submit']");
           const validate = () => {
             if (sellPriceInput.value && orderQuantityInput.value && totalOrderAmountInput.value)
@@ -170,9 +170,11 @@
             if (quantity < balance) {
               const result = quantity * Number(sellPriceInput.value);
               totalOrderAmountInput.value = Math.round(result).toString();
+              cautionElement.textContent = "";
+              cautionElement.hidden = true;
             } else {
-              alert("\uC8FC\uBB38 \uAC00\uB2A5 \uC218\uB7C9 \uCD08\uACFC\uC785\uB2C8\uB2E4. ");
-              orderQuantityInput.value = "";
+              cautionElement.textContent = "\uC8FC\uBB38 \uAC00\uB2A5 \uC218\uB7C9 \uCD08\uACFC\uC785\uB2C8\uB2E4. ";
+              cautionElement.hidden = false;
             }
             validate();
           });
@@ -180,15 +182,26 @@
             const quantity = Number(totalOrderAmountInput.value) / Number(sellPriceInput.value);
             if (quantity < balance) {
               orderQuantityInput.value = quantity.toString();
+              cautionElement.textContent = "";
+              cautionElement.hidden = true;
             } else {
-              alert("\uC8FC\uBB38 \uAC00\uB2A5 \uC218\uB7C9 \uCD08\uACFC\uC785\uB2C8\uB2E4. ");
-              orderQuantityInput.value = "";
+              cautionElement.textContent = "\uC8FC\uBB38 \uAC00\uB2A5 \uC218\uB7C9 \uCD08\uACFC\uC785\uB2C8\uB2E4.";
+              cautionElement.hidden = false;
             }
             validate();
           });
-          (_a = element.querySelector("form")) === null || _a === void 0 ? void 0 : _a.addEventListener("submit", (event) => {
+          (_a = element.querySelector("form")) === null || _a === void 0 ? void 0 : _a.addEventListener("submit", (event) => __awaiter(this, void 0, void 0, function* () {
             event.preventDefault();
-          });
+            const params = new URLSearchParams({
+              market: this.market,
+              side: "ask",
+              volume: orderQuantityInput.value,
+              price: sellPriceInput.value,
+              ord_type: "limit"
+            }).toString();
+            const reponse = yield fetchData_default("/getOrders", params);
+            console.log(reponse);
+          }));
           (_b = element.querySelector("form")) === null || _b === void 0 ? void 0 : _b.addEventListener("reset", () => {
             submitButton.disabled = true;
           });

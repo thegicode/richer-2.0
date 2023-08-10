@@ -7,14 +7,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-function fetchData(url, marketName) {
+function fetchData(url, params) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             let finalURL = url;
-            if (marketName) {
-                const params = new URLSearchParams({
-                    market: marketName,
-                }).toString();
+            if (params) {
                 finalURL = `${url}?${params}`;
             }
             const response = yield fetch(finalURL, { method: "GET" });

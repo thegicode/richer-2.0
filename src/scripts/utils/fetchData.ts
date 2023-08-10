@@ -1,11 +1,8 @@
-async function fetchData(url: string, marketName?: string) {
+async function fetchData(url: string, params?: string) {
     try {
         let finalURL = url;
 
-        if (marketName) {
-            const params = new URLSearchParams({
-                market: marketName,
-            }).toString();
+        if (params) {
             finalURL = `${url}?${params}`;
         }
 
