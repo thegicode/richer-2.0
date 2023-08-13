@@ -12,11 +12,12 @@ import fetchData from "@src/scripts/utils/fetchData";
 class AccountManager {
     constructor() {
         this.initializeAccounts();
+        this.orderDelete();
     }
     orderDelete() {
         return __awaiter(this, void 0, void 0, function* () {
             const params = new URLSearchParams({
-                uuid: "b1d3dcfa-7c20-4990-bb9e-5f2f0b12075f",
+                uuid: "c32a1c52-6c92-4a49-8a4d-59fb2a3b1d5a",
             }).toString();
             const deleted = yield fetchData("/delete", params);
             console.log("deleted", deleted);
