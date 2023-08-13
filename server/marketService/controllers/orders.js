@@ -21,6 +21,5 @@ module.exports = async (req) => {
         body,
     };
 
-    const response = await getJSON(options);
-    return response;
+    return await getJSON(options);
 };

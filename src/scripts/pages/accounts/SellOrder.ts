@@ -7,6 +7,7 @@ class SellOrder {
     private template: HTMLTemplateElement | null;
     private tradePrice: number;
     private avgBuyPrice: number;
+    private minTotal: number;
     private data: I_ChanceResponse | null;
 
     constructor(
@@ -23,6 +24,7 @@ class SellOrder {
         this.tradePrice = tradePrice;
         this.avgBuyPrice = avg_buy_price;
         this.data = null;
+        this.minTotal = 0;
 
         this.iniitialize();
     }
@@ -71,6 +73,7 @@ class SellOrder {
             unit_currency,
         } = ask_account;
         const { ask } = market;
+        this.minTotal = Number(ask.min_total);
 
         element.querySelectorAll("dl .unit").forEach((el) => {
             el.textContent = unit_currency;
@@ -103,7 +106,7 @@ class SellOrder {
         ) as HTMLInputElement;
         const sellPriceRadios: NodeListOf<HTMLInputElement> =
             element.querySelectorAll("input[name='sellPrice-rate']");
-        const sellPriceOptioonInput = element.querySelector(
+        const sellPriceOptionInput = element.querySelector(
             "input[name='sellPrcie-rate-input']"
         ) as HTMLInputElement;
         const cautionElement = element.querySelector(
@@ -121,10 +124,20 @@ class SellOrder {
             if (
                 sellPriceInput.value &&
                 orderQuantityInput.value &&
-                totalOrderAmountInput.value
+                Number(totalOrderAmountInput.value) > this.minTotal
             )
                 submitButton.disabled = false;
             else submitButton.disabled = true;
+        };
+
+        const checkMinTotalPrice = () => {
+            if (Number(totalOrderAmountInput.value) < this.minTotal) {
+                cautionElement.textContent = "최소 주문 가격 이하";
+                cautionElement.hidden = false;
+            } else {
+                cautionElement.textContent = "";
+                cautionElement.hidden = true;
+            }
         };
 
         const fromSellPriceToTotalOrderAmount = () => {
@@ -134,12 +147,25 @@ class SellOrder {
                     Number(orderQuantityInput.value)
                 ).toString();
             }
+
+            checkMinTotalPrice();
             validate();
         };
 
         const sellPriceByRate = (rate: number) => {
-            const price = this.tradePrice + this.tradePrice * rate;
+            let price = this.tradePrice + this.tradePrice * rate;
+            const remainder = price % 5;
+
+            if (price > 1000) {
+                if (remainder >= 2.5) {
+                    price += 5 - remainder;
+                } else {
+                    price -= remainder;
+                }
+            }
+
             sellPriceInput.value = price.toString();
+
             fromSellPriceToTotalOrderAmount();
         };
 
@@ -151,7 +177,7 @@ class SellOrder {
 
         sellPriceRadios.forEach((radio) => {
             radio.addEventListener("change", () => {
-                sellPriceOptioonInput.value = "";
+                sellPriceOptionInput.value = "";
                 const { checked, value } = radio;
                 if (checked) {
                     sellPriceByRate(Number(value));
@@ -159,19 +185,21 @@ class SellOrder {
             });
         });
 
-        sellPriceOptioonInput.addEventListener("input", () => {
+        sellPriceOptionInput.addEventListener("input", () => {
             const checkedInput = document.querySelector(
                 "input[name='sellPrice-rate']:checked"
             ) as HTMLInputElement;
             if (checkedInput) {
                 checkedInput.checked = false;
             }
-            const rate = Number(sellPriceOptioonInput.value) / 100;
+            const rate = Number(sellPriceOptionInput.value) / 100;
             sellPriceByRate(rate);
         });
 
         orderQuantityInput.addEventListener("input", () => {
             const quantity = Number(orderQuantityInput.value);
+
+            // 주문 가능 수량 초과 확인
             if (quantity < balance) {
                 const result = quantity * Number(sellPriceInput.value);
                 totalOrderAmountInput.value = Math.round(result).toString();
@@ -182,6 +210,8 @@ class SellOrder {
                 cautionElement.hidden = false;
                 // orderQuantityInput.value = "";
             }
+
+            checkMinTotalPrice();
             validate();
         });
 
@@ -206,6 +236,7 @@ class SellOrder {
             .querySelector("form")
             ?.addEventListener("submit", async (event) => {
                 event.preventDefault();
+
                 const params = new URLSearchParams({
                     market: this.market,
                     side: "ask",
@@ -235,13 +266,13 @@ class SellOrder {
 export { SellOrder };
 
 // {
-//     "uuid": "b1d3dcfa-7c20-4990-bb9e-5f2f0b12075f",
+//     "uuid": "c32a1c52-6c92-4a49-8a4d-59fb2a3b1d5a",
 //     "side": "ask",
 //     "ord_type": "limit",
 //     "price": "1005",
 //     "state": "wait",
 //     "market": "KRW-XRP",
-//     "created_at": "2023-08-13T16:35:53.233626+09:00",
+//     "created_at": "2023-08-13T19:17:47.087004+09:00",
 //     "volume": "5",
 //     "remaining_volume": "5",
 //     "reserved_fee": "0",

@@ -68,6 +68,7 @@
           this.tradePrice = tradePrice;
           this.avgBuyPrice = avg_buy_price;
           this.data = null;
+          this.minTotal = 0;
           this.iniitialize();
         }
         iniitialize() {
@@ -102,6 +103,7 @@
           const { ask_fee, market, ask_account } = data;
           const { currency, balance, unit_currency } = ask_account;
           const { ask } = market;
+          this.minTotal = Number(ask.min_total);
           element.querySelectorAll("dl .unit").forEach((el) => {
             el.textContent = unit_currency;
           });
@@ -121,23 +123,41 @@
           const orderQuantityInput = element.querySelector(".orderQuantity input");
           const totalOrderAmountInput = element.querySelector(".totalOrderAmount input");
           const sellPriceRadios = element.querySelectorAll("input[name='sellPrice-rate']");
-          const sellPriceOptioonInput = element.querySelector("input[name='sellPrcie-rate-input']");
+          const sellPriceOptionInput = element.querySelector("input[name='sellPrcie-rate-input']");
           const cautionElement = element.querySelector(".sellOrder-caution");
           const submitButton = element.querySelector("button[type='submit']");
           const validate = () => {
-            if (sellPriceInput.value && orderQuantityInput.value && totalOrderAmountInput.value)
+            if (sellPriceInput.value && orderQuantityInput.value && Number(totalOrderAmountInput.value) > this.minTotal)
               submitButton.disabled = false;
             else
               submitButton.disabled = true;
+          };
+          const checkMinTotalPrice = () => {
+            if (Number(totalOrderAmountInput.value) < this.minTotal) {
+              cautionElement.textContent = "\uCD5C\uC18C \uC8FC\uBB38 \uAC00\uACA9 \uC774\uD558";
+              cautionElement.hidden = false;
+            } else {
+              cautionElement.textContent = "";
+              cautionElement.hidden = true;
+            }
           };
           const fromSellPriceToTotalOrderAmount = () => {
             if (orderQuantityInput.value) {
               totalOrderAmountInput.value = (Number(sellPriceInput.value) * Number(orderQuantityInput.value)).toString();
             }
+            checkMinTotalPrice();
             validate();
           };
           const sellPriceByRate = (rate) => {
-            const price = this.tradePrice + this.tradePrice * rate;
+            let price = this.tradePrice + this.tradePrice * rate;
+            const remainder = price % 5;
+            if (price > 1e3) {
+              if (remainder >= 2.5) {
+                price += 5 - remainder;
+              } else {
+                price -= remainder;
+              }
+            }
             sellPriceInput.value = price.toString();
             fromSellPriceToTotalOrderAmount();
           };
@@ -147,19 +167,19 @@
           });
           sellPriceRadios.forEach((radio) => {
             radio.addEventListener("change", () => {
-              sellPriceOptioonInput.value = "";
+              sellPriceOptionInput.value = "";
               const { checked, value } = radio;
               if (checked) {
                 sellPriceByRate(Number(value));
               }
             });
           });
-          sellPriceOptioonInput.addEventListener("input", () => {
+          sellPriceOptionInput.addEventListener("input", () => {
             const checkedInput = document.querySelector("input[name='sellPrice-rate']:checked");
             if (checkedInput) {
               checkedInput.checked = false;
             }
-            const rate = Number(sellPriceOptioonInput.value) / 100;
+            const rate = Number(sellPriceOptionInput.value) / 100;
             sellPriceByRate(rate);
           });
           orderQuantityInput.addEventListener("input", () => {
@@ -173,6 +193,7 @@
               cautionElement.textContent = "\uC8FC\uBB38 \uAC00\uB2A5 \uC218\uB7C9 \uCD08\uACFC\uC785\uB2C8\uB2E4. ";
               cautionElement.hidden = false;
             }
+            checkMinTotalPrice();
             validate();
           });
           totalOrderAmountInput.addEventListener("input", () => {
