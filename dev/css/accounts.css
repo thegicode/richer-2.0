@@ -179,22 +179,31 @@ ul {
 }
 .sellOrder .sellPrice-options {
   display: flex;
-  justify-content: space-between;
-  gap: 2px;
+  flex-wrap: wrap;
+  gap: 5px;
   margin-top: 15px;
 }
 .sellOrder .sellPrice-options label {
   display: flex;
-}
-.sellOrder .sellPrice-options-input label {
-  display: flex;
-  justify-content: flex-end;
   align-items: center;
-  gap: 10px;
-  margin-top: 10px;
 }
-.sellOrder .sellPrice-options-input input {
-  width: 70px;
+.sellOrder .sellPrice-options input[type=radio] {
+  width: auto;
+}
+.sellOrder .sellPrice-options input[type=number] {
+  width: 100px;
+  margin-left: 10px;
+}
+.sellOrder .sellPrice-options .percent {
+  margin-left: 5px;
+}
+.sellOrder .sellPrice-options input[type=radio] ~ input[type=number],
+.sellOrder .sellPrice-options input[type=radio] ~ .percent {
+  display: none;
+}
+.sellOrder .sellPrice-options input[type=radio]:checked ~ input[type=number],
+.sellOrder .sellPrice-options input[type=radio]:checked ~ .percent {
+  display: block;
 }
 .sellOrder-caution {
   border-radius: 8px;

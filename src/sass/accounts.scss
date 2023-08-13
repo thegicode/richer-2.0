@@ -208,32 +208,37 @@ ul {
 
     .sellPrice-options {
         display: flex;
-        justify-content: space-between;
-        gap: 2px;
+        // justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 5px;
         margin-top: 15px;
         label {
             display: flex;
-            // align-items: center;
-        }
-    }
-    .sellPrice-options-input {
-        label {
-            display: flex;
-            justify-content: flex-end;
             align-items: center;
-            gap: 10px;
-            margin-top: 10px;
         }
-        input {
-            width: 70px;
+
+        input[type="radio"] {
+            width: auto;
+        }
+
+        input[type="number"] {
+            width: 100px;
+            margin-left: 10px;
+        }
+        .percent {
+            margin-left: 5px;
+        }
+
+        input[type="radio"] ~ input[type="number"],
+        input[type="radio"] ~ .percent {
+            display: none;
+        }
+
+        input[type="radio"]:checked ~ input[type="number"],
+        input[type="radio"]:checked ~ .percent {
+            display: block;
         }
     }
-
-    // .orderQuantity {
-    // }
-
-    // .totalOrderAmount {
-    // }
 
     &-caution {
         border-radius: 8px;

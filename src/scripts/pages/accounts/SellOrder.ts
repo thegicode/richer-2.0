@@ -7,8 +7,13 @@ class SellOrder {
     private template: HTMLTemplateElement | null;
     private tradePrice: number;
     private avgBuyPrice: number;
+    private balance: number;
     private minTotal: number;
     private data: I_ChanceResponse | null;
+    private element: HTMLElement | null;
+    private sellPriceInput: HTMLInputElement | null;
+    private orderQuantityInput: HTMLInputElement | null;
+    private totalOrderAmountInput: HTMLInputElement | null;
 
     constructor(
         market: string,
@@ -23,8 +28,13 @@ class SellOrder {
         this.template = document.querySelector("#sellOrder");
         this.tradePrice = tradePrice;
         this.avgBuyPrice = avg_buy_price;
-        this.data = null;
+        this.balance = 0;
         this.minTotal = 0;
+        this.data = null;
+        this.element = null;
+        this.sellPriceInput = null;
+        this.orderQuantityInput = null;
+        this.totalOrderAmountInput = null;
 
         this.iniitialize();
     }
@@ -49,6 +59,17 @@ class SellOrder {
     private show() {
         const template = this.template?.content.firstElementChild;
         const element = template?.cloneNode(true) as HTMLElement;
+
+        this.element = element;
+        this.sellPriceInput = element.querySelector(
+            ".sellPrice input"
+        ) as HTMLInputElement;
+        this.orderQuantityInput = element.querySelector(
+            ".orderQuantity input"
+        ) as HTMLInputElement;
+        this.totalOrderAmountInput = element.querySelector(
+            ".totalOrderAmount input"
+        ) as HTMLInputElement;
 
         this.render(element);
         this.addEvent(element);
@@ -91,145 +112,149 @@ class SellOrder {
             ask_fee;
     }
 
-    private addEvent(element: HTMLElement) {
-        if (!this.data) return;
-        const { balance } = this.data.ask_account;
+    private isFormValid(
+        sellPrice: string,
+        orderQuantity: string,
+        totalOrderAmount: string
+    ): boolean {
+        const isQuantitiyTrue = Number(orderQuantity) <= this.balance;
+        if (isQuantitiyTrue) {
+            // cautionElement.hide()
+        } else {
+            // cautionElement.show("주문 가능 수량 초과)
+            this.showCaution("주문 가능 수량 초과");
+        }
 
-        const sellPriceInput = element.querySelector(
-            ".sellPrice input"
-        ) as HTMLInputElement;
-        const orderQuantityInput = element.querySelector(
-            ".orderQuantity input"
-        ) as HTMLInputElement;
-        const totalOrderAmountInput = element.querySelector(
-            ".totalOrderAmount input"
-        ) as HTMLInputElement;
-        const sellPriceRadios: NodeListOf<HTMLInputElement> =
-            element.querySelectorAll("input[name='sellPrice-rate']");
-        const sellPriceOptionInput = element.querySelector(
-            "input[name='sellPrcie-rate-input']"
-        ) as HTMLInputElement;
-        const cautionElement = element.querySelector(
+        const isTotalPriceTrue = Number(totalOrderAmount) >= this.minTotal;
+        if (isTotalPriceTrue) {
+            // cautionElement.hide()
+        } else {
+            // cautionElement.show("최소 주문 가격 이하 ")
+            this.showCaution("최소 주문 가격 이하 ");
+        }
+
+        const isValid =
+            sellPrice && isQuantitiyTrue && isTotalPriceTrue ? true : false;
+        if (isValid) {
+            this.hideCaution();
+        }
+        return isValid;
+    }
+
+    private showCaution(message: string) {
+        const cautionElement = this.element?.querySelector(
             ".sellOrder-caution"
         ) as HTMLElement;
+        cautionElement.textContent = message;
+        cautionElement.hidden = false;
+    }
+
+    private hideCaution() {
+        const cautionElement = this.element?.querySelector(
+            ".sellOrder-caution"
+        ) as HTMLElement;
+        cautionElement.textContent = "";
+        cautionElement.hidden = true;
+    }
+
+    private setTotalPrice() {
+        this.totalOrderAmountInput!.value = (
+            Number(this.sellPriceInput?.value) *
+            Number(this.orderQuantityInput?.value)
+        ).toString();
+    }
+
+    private updateSubmitButtonState(element: HTMLElement) {
+        const submitButton = element.querySelector(
+            "button[type='submit']"
+        ) as HTMLButtonElement;
+
+        submitButton.disabled = !this.isFormValid(
+            this.sellPriceInput!.value,
+            this.orderQuantityInput!.value,
+            this.totalOrderAmountInput!.value
+        );
+    }
+
+    private setSellPriceLast(element: HTMLElement, price: number) {
+        const remainder = price % 5;
+        let step = 1;
+
+        if (price > 1000) {
+            if (remainder >= 2.5) {
+                price += 5 - remainder;
+            } else {
+                price -= remainder;
+            }
+            step = 5;
+        } else {
+            price = Math.round(price);
+        }
+
+        this.sellPriceInput?.setAttribute("step", step.toString());
+        this.sellPriceInput!.value = price.toString();
+    }
+
+    private addEvent(element: HTMLElement) {
+        if (!this.data) return;
+
+        const { balance } = this.data.ask_account;
+        this.balance = balance;
+        const sellPriceRadios: NodeListOf<HTMLInputElement> =
+            element.querySelectorAll("input[name='sellPrice-rate']");
+        const sellPriceEtcInput = element.querySelector(
+            "input[name='sellPrcie-rate-etc']"
+        ) as HTMLInputElement;
 
         const submitButton = element.querySelector(
             "button[type='submit']"
         ) as HTMLButtonElement;
-        // const resetButton = element.querySelector(
-        //     "button[type='reset']"
-        // ) as HTMLButtonElement;
 
-        const validate = () => {
-            if (
-                sellPriceInput.value &&
-                orderQuantityInput.value &&
-                Number(totalOrderAmountInput.value) > this.minTotal
-            )
-                submitButton.disabled = false;
-            else submitButton.disabled = true;
-        };
+        this.sellPriceInput!.value = this.tradePrice.toString();
 
-        const checkMinTotalPrice = () => {
-            if (Number(totalOrderAmountInput.value) < this.minTotal) {
-                cautionElement.textContent = "최소 주문 가격 이하";
-                cautionElement.hidden = false;
-            } else {
-                cautionElement.textContent = "";
-                cautionElement.hidden = true;
-            }
-        };
-
-        const fromSellPriceToTotalOrderAmount = () => {
-            if (orderQuantityInput.value) {
-                totalOrderAmountInput.value = (
-                    Number(sellPriceInput.value) *
-                    Number(orderQuantityInput.value)
-                ).toString();
-            }
-
-            checkMinTotalPrice();
-            validate();
-        };
-
-        const sellPriceByRate = (rate: number) => {
-            let price = this.tradePrice + this.tradePrice * rate;
-            const remainder = price % 5;
-
-            if (price > 1000) {
-                if (remainder >= 2.5) {
-                    price += 5 - remainder;
-                } else {
-                    price -= remainder;
-                }
-            }
-
-            sellPriceInput.value = price.toString();
-
-            fromSellPriceToTotalOrderAmount();
-        };
-
-        sellPriceInput.value = this.tradePrice.toString();
-
-        sellPriceInput.addEventListener("input", () => {
-            fromSellPriceToTotalOrderAmount();
+        // Events
+        this.sellPriceInput?.addEventListener("input", () => {
+            this.setSellPriceLast(element, Number(this.sellPriceInput!.value));
+            this.setTotalPrice();
+            this.updateSubmitButtonState(element);
         });
 
         sellPriceRadios.forEach((radio) => {
             radio.addEventListener("change", () => {
-                sellPriceOptionInput.value = "";
-                const { checked, value } = radio;
-                if (checked) {
-                    sellPriceByRate(Number(value));
-                }
+                sellPriceEtcInput.value = "";
+                const price =
+                    this.tradePrice + this.tradePrice * Number(radio.value);
+                this.setSellPriceLast(element, price);
+                this.setTotalPrice();
+                this.updateSubmitButtonState(element);
             });
         });
 
-        sellPriceOptionInput.addEventListener("input", () => {
-            const checkedInput = document.querySelector(
-                "input[name='sellPrice-rate']:checked"
-            ) as HTMLInputElement;
-            if (checkedInput) {
-                checkedInput.checked = false;
-            }
-            const rate = Number(sellPriceOptionInput.value) / 100;
-            sellPriceByRate(rate);
+        sellPriceEtcInput.addEventListener("input", () => {
+            const rate = Number(sellPriceEtcInput.value) / 100;
+            const price = this.tradePrice + this.tradePrice * rate;
+            this.setSellPriceLast(element, price);
+            this.setTotalPrice();
+            this.updateSubmitButtonState(element);
         });
 
-        orderQuantityInput.addEventListener("input", () => {
-            const quantity = Number(orderQuantityInput.value);
+        this.orderQuantityInput?.addEventListener("input", () => {
+            const quantity = Number(this.orderQuantityInput!.value);
 
-            // 주문 가능 수량 초과 확인
-            if (quantity < balance) {
-                const result = quantity * Number(sellPriceInput.value);
-                totalOrderAmountInput.value = Math.round(result).toString();
-                cautionElement.textContent = "";
-                cautionElement.hidden = true;
-            } else {
-                cautionElement.textContent = "주문 가능 수량 초과입니다. ";
-                cautionElement.hidden = false;
-                // orderQuantityInput.value = "";
-            }
+            const result = quantity * Number(this.sellPriceInput!.value);
+            this.totalOrderAmountInput!.value = Math.round(result).toString();
 
-            checkMinTotalPrice();
-            validate();
+            this.setTotalPrice();
+            this.updateSubmitButtonState(element);
         });
 
-        totalOrderAmountInput.addEventListener("input", () => {
+        this.totalOrderAmountInput!.addEventListener("input", () => {
             const quantity =
-                Number(totalOrderAmountInput.value) /
-                Number(sellPriceInput.value);
-            if (quantity < balance) {
-                orderQuantityInput.value = quantity.toString();
-                cautionElement.textContent = "";
-                cautionElement.hidden = true;
-            } else {
-                cautionElement.textContent = "주문 가능 수량 초과입니다.";
-                cautionElement.hidden = false;
-                // orderQuantityInput.value = "";
-                // totalOrderAmountInput.value = "";
-            }
-            validate();
+                Number(this.totalOrderAmountInput!.value) /
+                Number(this.sellPriceInput!.value);
+            this.orderQuantityInput!.value = quantity.toString();
+
+            this.updateSubmitButtonState(element);
         });
 
         element
@@ -240,13 +265,13 @@ class SellOrder {
                 const params = new URLSearchParams({
                     market: this.market,
                     side: "ask",
-                    volume: orderQuantityInput.value,
-                    price: sellPriceInput.value,
+                    volume: this.orderQuantityInput!.value,
+                    price: this.sellPriceInput!.value,
                     ord_type: "limit",
                 }).toString();
 
-                const reponse = await fetchData("/getOrders", params);
-                console.log(reponse);
+                // const reponse = await fetchData("/getOrders", params);
+                // console.log(reponse);
             });
 
         element.querySelector("form")?.addEventListener("reset", () => {
