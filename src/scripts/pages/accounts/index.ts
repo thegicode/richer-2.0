@@ -4,6 +4,17 @@ import fetchData from "@src/scripts/utils/fetchData";
 class AccountManager {
     constructor() {
         this.initializeAccounts();
+
+        // this.orderDelete();
+    }
+
+    private async orderDelete() {
+        const params = new URLSearchParams({
+            uuid: "b1d3dcfa-7c20-4990-bb9e-5f2f0b12075f",
+        }).toString();
+
+        const deleted = await fetchData("/delete", params);
+        console.log("deleted", deleted);
     }
 
     private async initializeAccounts() {

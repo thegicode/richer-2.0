@@ -234,6 +234,7 @@ class SellOrder {
 
 export { SellOrder };
 
+// 주문 결과
 // {
 //     "uuid": "b1d3dcfa-7c20-4990-bb9e-5f2f0b12075f",
 //     "side": "ask",

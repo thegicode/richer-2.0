@@ -1,8 +1,6 @@
 const performRequest = async ({ method = "GET", url, headers = {}, body }) => {
     headers.Accept = "application/json";
 
-    console.log("performRequest", body);
-
     if (body) {
         headers["Content-Type"] = "application/json";
         body = JSON.stringify(body);
@@ -10,7 +8,8 @@ const performRequest = async ({ method = "GET", url, headers = {}, body }) => {
 
     try {
         const response = await fetch(url, { method, headers, body });
-        return await response.json();
+        const result = await response.json();
+        return result;
     } catch (err) {
         console.error(err);
     }

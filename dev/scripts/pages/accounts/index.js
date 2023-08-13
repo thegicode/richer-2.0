@@ -13,6 +13,15 @@ class AccountManager {
     constructor() {
         this.initializeAccounts();
     }
+    orderDelete() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const params = new URLSearchParams({
+                uuid: "b1d3dcfa-7c20-4990-bb9e-5f2f0b12075f",
+            }).toString();
+            const deleted = yield fetchData("/delete", params);
+            console.log("deleted", deleted);
+        });
+    }
     initializeAccounts() {
         return __awaiter(this, void 0, void 0, function* () {
             const { krwAsset, myMarkets } = yield fetchData("/getAccounts");
