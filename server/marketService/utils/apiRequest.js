@@ -1,6 +1,8 @@
 const performRequest = async ({ method = "GET", url, headers = {}, body }) => {
     headers.Accept = "application/json";
 
+    console.log("performRequest", body);
+
     if (body) {
         headers["Content-Type"] = "application/json";
         body = JSON.stringify(body);

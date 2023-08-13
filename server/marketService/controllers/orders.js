@@ -3,10 +3,9 @@ const UPBIT_URL = require("../../env/url");
 const { getJSON } = require("../utils/apiRequest");
 
 module.exports = async (req) => {
-    console.log(req.query);
-    const { marekt, side, volume, price, ord_type } = req.query;
+    const { market, side, volume, price, ord_type } = req.query;
     const body = {
-        marekt,
+        market,
         side,
         volume,
         price,
@@ -19,8 +18,9 @@ module.exports = async (req) => {
         method: "POST",
         url: `${UPBIT_URL.orders}?${query}`,
         headers: { Authorization: token },
-        json: body,
+        body,
     };
 
-    // return await getJSON(options);
+    const response = await getJSON(options);
+    return response;
 };

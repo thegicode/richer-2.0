@@ -233,3 +233,21 @@ class SellOrder {
 }
 
 export { SellOrder };
+
+// {
+//     "uuid": "b1d3dcfa-7c20-4990-bb9e-5f2f0b12075f",
+//     "side": "ask",
+//     "ord_type": "limit",
+//     "price": "1005",
+//     "state": "wait",
+//     "market": "KRW-XRP",
+//     "created_at": "2023-08-13T16:35:53.233626+09:00",
+//     "volume": "5",
+//     "remaining_volume": "5",
+//     "reserved_fee": "0",
+//     "remaining_fee": "0",
+//     "paid_fee": "0",
+//     "locked": "5",
+//     "executed_volume": "0",
+//     "trades_count": 0
+// }
